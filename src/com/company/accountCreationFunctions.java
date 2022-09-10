@@ -1,23 +1,44 @@
 package com.company;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class accountCreationFunctions {
+public class accountCreationFunctions { //all needs to be converted from text file storage to database
 
 
+    public static void makeUser(){
+        ArrayList<String> newUser = new ArrayList<>();
+        newUser.add(userDetails("user"));
+        try {
+            FileWriter myWriter = new FileWriter(Main.users.getName(), true); //True means append to file contents, False means overwrite
+            myWriter.write(newUser.get(0) + "\n"); // writes to file
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
 
-    public static void makeAccount(){
-        String username = getUsername("enter username (must be at least 4 characters and contain no spaces");
-        String password = getPassword("enter enter password (must contain at least 1 letter and 1 number and contain no spaces and be at least 6 characters long");
-        String authority = ("No");
+    public static String userDetails(String authority) {
+        String username = getUsername("enter username (must be at least 4 characters and contain no spaces)");
+        String password = getPassword("enter enter password (must contain at least 1 letter and 1 number and contain no spaces and be at least 6 characters long)");
+        String userAuthority = (authority);
+        return (username + "," + password + "," + userAuthority);
     }
 
 
     public static String getUsername(String prompt) {
         Scanner input = new Scanner(System.in);
         String strInput = "";
-        boolean validPassword = false;
-        while (validPassword == false) {
+        boolean validUsername = false;
+        while (validUsername == false) {
             try {
                 System.out.println(prompt);
                 strInput = input.next();
@@ -25,11 +46,11 @@ public class accountCreationFunctions {
                 System.out.println("incorrect input");
                 System.out.println(e);
             }
-            boolean passwordCheck = checkUsername(strInput);
-            if (passwordCheck == true) {
-                validPassword = true;
+            boolean usernameCheck = checkUsername(strInput);
+            if (usernameCheck == true) {
+                validUsername = true;
             }else {
-                System.out.println("invalid password entered");
+                System.out.println("invalid username entered");
             }
         }
         return (strInput);
@@ -43,11 +64,12 @@ public class accountCreationFunctions {
         }else {
             checks++;
         }
-        if (username.length() > 4) {
+        if (username.length() > 3) {
             checks++;
         }
 
-        //unique name check
+        //unique name check temp check++ to satisfy if statment
+        checks++;
 
 
         if (checks == 3) {
@@ -99,7 +121,7 @@ public class accountCreationFunctions {
                 break;
             }
         }
-        if (password.length() > 6) {
+        if (password.length() > 5) {
             checks++;
         }
         if (password.contains(" ")) {
