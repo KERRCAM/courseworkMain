@@ -39,15 +39,17 @@ public class Main {
     }
 
 
+
+
+
     public static void adminMenu() {
-        boolean menu = true;
-        while (menu == true) {
-            String action = getString("what would you like to (enter number of action): \n (1)-- \n (2)-- ");
+        boolean exit = false;
+        while (exit == false) {
+            String action = getString("what would you like to (enter number of action): \n (1)-add map- \n (2)-exit- ");
             if (action.equals("1")) {
             }
-            String menuAgain = getString("would you like to perform another action Y or N?");
-            if (menuAgain.equals("N")) {
-                menu = false;
+            if (action.equals("2")) {
+                exit = true;
             }
         }
     }
@@ -56,12 +58,12 @@ public class Main {
     public static void userMenu() {
         boolean menu = true;
         while (menu == true) {
-            String action = getString("what would you like to (enter number of action): \n (1)-load game save-  \n (2)-start new game- \n (3)-view leaderboards-");
-            if (action.equals("1")) {
+            String option = getString("what would you like to (enter number of action): \n (1)-load game save-  \n (2)-start new game- \n (3)-view leaderboards-");
+            if (option.equals("1")) {
             }
-            if (action.equals("2")) {
+            if (option.equals("2")) {
             }
-            if (action.equals("3")) {
+            if (option.equals("3")) {
             }
             String menuAgain = getString("would you like to perform another action Y or N?");
             if (menuAgain.equals("N")) {
@@ -71,23 +73,40 @@ public class Main {
     }
 
 
-    public static void login(){
 
-    }
 
 
 
 
 
     public static void main(String[] args) {
-        String option = getString("would you like to (enter number of action): \n (1)-log in- \n (2)-sign up-");
-
-        if (option.equals("1")) {
+        String option = getString("would you like to (enter number of action): \n (1)-log in- \n (2)-sign up- \n (3)-exit-");
+        boolean exit = false;
+        while(exit == false) {
+            if (option.equals("1")) {
+                int logInStatus = loginFunctions.logIn();
+                if (logInStatus == 0) {
+                    System.out.println("username or password incorrect");
+                }
+                if (logInStatus == 1) {
+                    System.out.println("user logged in");
+                    userMenu();
+                }
+                if (logInStatus == 2) {
+                    System.out.println("admin logged in");
+                    adminMenu();
+                }
+            }
+            if (option.equals("2")) {
+                accountCreationFunctions.makeUser();
+            }
+            if (option.equals("3")) {
+                exit = true;
+            }
         }
 
-        if (option.equals("2")) {
-            accountCreationFunctions.makeUser();
-        }
+
+
 
     }
 
