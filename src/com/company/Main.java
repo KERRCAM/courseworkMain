@@ -4,10 +4,6 @@ import com.company.Objects.User;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
@@ -21,12 +17,14 @@ public class Main {
     public static String usersTable[][] = new String[10][4];
     public static File users = new File("users.txt");
     public static ArrayList<User> fileContentsUsers = new ArrayList<>();
+    //new map is filled in with any new map that needs to made into a text file
+    public static String newMap[][] = {{}};
 
 
     public static File gMap1File = new File("gMap1.txt");
     public static File tMap1File= new File("tMap1.txt");
     public static String gMapInPlay[][] = new String[30][200];
-
+    public static String tMapInPlay[][] = new String[13][38];
 
 
 
@@ -111,7 +109,12 @@ public class Main {
     }
 
 
-
+    public static void newMap(){
+        String newMapName = getString("what is the name of the new map");
+        int rows = getPosInt("enter number of rows for new map (vertical hight)");
+        int columns = getPosInt("enter number of rows for new map (horizontal width)");
+        mapToFile(newMapName,newMap, rows, columns);
+    }
 
 
 
@@ -127,6 +130,17 @@ public class Main {
             System.out.println(e);
         }
         return (strInput);
+    }
+
+
+    public static int getPosInt(String prompt) {
+        Scanner input = new Scanner(System.in);
+        int intInput = 0;
+        while (intInput < 1) {
+            System.out.println(prompt);
+            intInput = input.nextInt();
+        }
+        return (intInput);
     }
 
 
@@ -206,7 +220,9 @@ public class Main {
                             {"#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#"}};
 
 
-        //mapToFile("gMap1.txt",gMap, 30, 200); // what needs to go into add map section of admin menu
+
+
+
         fileToMap("gMap1.txt"); // loads map in named text file to active gmap
         printMap(gMapInPlay, 30, 200); //prints active gmap
 
