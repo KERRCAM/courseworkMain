@@ -32,6 +32,20 @@ public class loginFunctions {
     }
 
 
+    public static int userIDfinder(){
+        fileToList("users.txt");
+        int userIndexPos = 0;
+        String username = Main.userLoggedIn;
+
+        for (int i = 0; i < Main.fileContentsUsers.size(); i++) {
+            if (Main.fileContentsUsers.get(i).getUsername().equals(username)) {
+                userIndexPos = i;
+            }
+        }
+        return(userIndexPos - 2);
+    }
+
+
     public static int logIn(){
         int logInStatus = 0; // 0 = not logged in - 1 = user logged in - 2 = admin logged in
         fileToList("users.txt");
@@ -52,6 +66,9 @@ public class loginFunctions {
             if (Main.fileContentsUsers.get(userIndexPos).getAuthority().equals("admin")) {
                 logInStatus++;
             }
+        }
+        if (logInStatus > 0) {
+            Main.userLoggedIn = username;
         }
         return(logInStatus);
     }

@@ -14,6 +14,7 @@ import java.util.List;
 
 public class Main {
 
+    public static String userLoggedIn = "";
     public static String usersTable[][] = new String[10][4];
     public static File users = new File("users.txt");
     public static ArrayList<User> fileContentsUsers = new ArrayList<>();
@@ -23,7 +24,7 @@ public class Main {
 
     public static File gMap1File = new File("gMap1.txt");
     public static File tMap1File= new File("tMap1.txt");
-    public static String gMapInPlay[][] = new String[30][200];
+
     public static String tMapInPlay[][] = new String[13][38];
 
 
@@ -95,8 +96,8 @@ public class Main {
             int i = 0;
             while ((line = br.readLine()) != null) {
                 List<String> splitLine = Arrays.asList(line.split(","));
-                for (int j = 0; j < 200; j++) {
-                    gMapInPlay[i][j] = splitLine.get(j);
+                for (int j = 0; j < 200; j++) { //just need to chage 200 and map in play for tutorial map version
+                    game.gMapInPlay[i][j] = splitLine.get(j);
                     //System.out.print(splitLine.get(i)); //test print
                 }
                 //System.out.println(); //test print
@@ -149,6 +150,7 @@ public class Main {
         while (exit == false) {
             String action = getString("what would you like to (enter number of action): \n (1)-add map- \n (2)-exit- ");
             if (action.equals("1")) {
+
             }
             if (action.equals("2")) {
                 exit = true;
@@ -158,18 +160,21 @@ public class Main {
 
 
     public static void userMenu() {
-        boolean menu = true;
-        while (menu == true) {
-            String option = getString("what would you like to (enter number of action): \n (1)-load game save-  \n (2)-start new game- \n (3)-view leaderboards-");
+        boolean exit = false;
+        while (exit == false) {
+            String option = getString("what would you like to (enter number of action): \n (1)-load game save-  \n (2)-start new game (warning new game will overwrite any saved game)- \n (3)-view tutorial- \n (4)-view leaderboards- \n (5)-exit-");
             if (option.equals("1")) {
+                game.gameLoop("load");
             }
             if (option.equals("2")) {
+                game.gameLoop("new");
             }
             if (option.equals("3")) {
             }
-            String menuAgain = getString("would you like to perform another action Y or N?");
-            if (menuAgain.equals("N")) {
-                menu = false;
+            if (option.equals("4")) {
+            }
+            if (option.equals("5")) {
+                exit = true;
             }
         }
     }
@@ -223,8 +228,8 @@ public class Main {
 
 
 
-        fileToMap("gMap1.txt"); // loads map in named text file to active gmap
-        printMap(gMapInPlay, 30, 200); //prints active gmap
+        //fileToMap("gMap1.txt"); // loads map in named text file to active gmap
+        //printMap(gMapInPlay, 30, 200); //prints active gmap
 
         String option = getString("would you like to (enter number of action): \n (1)-log in- \n (2)-sign up- \n (3)-exit-");
         boolean exit = false;
