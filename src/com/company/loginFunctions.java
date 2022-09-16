@@ -52,7 +52,7 @@ public class loginFunctions {
         boolean userFound = false;
         int userIndexPos = 0;
         String username = Main.getString("enter your user username");
-        String password = Main.getString("enter your user password");
+        String password = accountCreationFunctions.passwordHash(Main.getString("enter your user password"));
         for (int i = 0; i < Main.fileContentsUsers.size(); i++) {
             if (Main.fileContentsUsers.get(i).getUsername().equals(username)) {
                 userIndexPos = i;

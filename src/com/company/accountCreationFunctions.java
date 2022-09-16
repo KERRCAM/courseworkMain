@@ -2,12 +2,10 @@ package com.company;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class accountCreationFunctions { //all needs to be converted from text file storage to database
 
@@ -99,7 +97,28 @@ public class accountCreationFunctions { //all needs to be converted from text fi
                 System.out.println("invalid password entered");
             }
         }
-        return (strInput);
+        String hashedPassword = passwordHash(strInput);
+        return(hashedPassword);
+    }
+
+
+    public static String passwordHash(String inputPassword){
+        String password = inputPassword;
+        String hashedPassword = null;
+        try
+        {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(password.getBytes());
+            byte[] bytes = md.digest();
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < bytes.length; i++) {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            hashedPassword = sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return(hashedPassword);
     }
 
 

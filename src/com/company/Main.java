@@ -14,6 +14,7 @@ import java.util.List;
 
 public class Main {
 
+
     public static String userLoggedIn = "";
     public static String usersTable[][] = new String[10][4];
     public static File users = new File("users.txt");
@@ -182,6 +183,9 @@ public class Main {
 
     public static void main(String[] args) {
 
+        //String testPass = accountCreationFunctions.passwordHash("456");
+        //System.out.println(testPass);
+
         // gMap = game map
         // tMap = tutorial map
 
@@ -227,9 +231,9 @@ public class Main {
 
 
 
-
+        //mapToFile("gMap1.txt",gMap1, 30, 200);
         //fileToMap("gMap1.txt"); // loads map in named text file to active gmap
-        //printMap(gMapInPlay, 30, 200); //prints active gmap
+        //printMap(gMap1, 30, 200); //prints active gmap
 
         String option = getString("would you like to (enter number of action): \n (1)-log in- \n (2)-sign up- \n (3)-exit-");
         boolean exit = false;
