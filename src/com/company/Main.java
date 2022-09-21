@@ -264,59 +264,18 @@ public class Main {
 
 }
 
-
-
 /*
-    public static void databaseSetup() {
-
-
-        String DatabaseLocation = System.getProperty("user.dir") + "\\courseworkDatabase.accdb";
+    String DatabaseLocation = System.getProperty("user.dir") + "\\test.accdb";
         try {
-            Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + DatabaseLocation, "", "");
-            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            con.close();
-        } catch (Exception e) {
-            System.out.println("Error in the SQL class: " + e);
-
-        }
-    }
-
-
-    String DatabaseLocation = System.getProperty("user.dir") + "\\courseworkDatabase.accdb";
-            try {
                 Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + DatabaseLocation, "", "");
                 Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
-
-                String sql = "INSERT INTO users(username, password)" + "VALUES ('abcd', 'abcde1')";
-                ResultSet rs = stmt.executeQuery(sql);
+                stmt.executeUpdate("INSERT INTO users(username, password)" + "VALUES ('abcd', 'abcde1')");
 
 
-                rs.close();
+
                 con.close();
-            } catch (Exception e) {
+                } catch (Exception e) {
                 System.out.println("Error in the SQL class: " + e);
-            }
-        }
-
-
-
-    try {
-            Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + DatabaseLocation, "", "");
-            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-
-
-            String sql = "INSERT INTO users(username, password)" + "VALUES ("+username+","+password+")";
-            ResultSet rs = stmt.executeQuery(sql);
-
-
-            rs.close();
-            con.close();
-        } catch (Exception e) {
-            System.out.println("Error in the SQL class: " + e);
-        }
-    }
-
-
-
-     */
+                }
+*/
