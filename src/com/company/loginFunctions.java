@@ -1,7 +1,5 @@
 package com.company;
-
 import com.company.Objects.User;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 

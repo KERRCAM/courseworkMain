@@ -7,7 +7,7 @@ import java.util.Scanner;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class accountCreationFunctions { //all needs to be converted from text file storage to database
+public class accountCreationFunctions { //all needs to be converted from text file storage to database.
 
 
     public static void makeUser(){
@@ -102,7 +102,7 @@ public class accountCreationFunctions { //all needs to be converted from text fi
     }
 
 
-    public static String passwordHash(String inputPassword){
+    public static String passwordHash(String inputPassword){ // hash code in try catch got online
         String password = inputPassword;
         String hashedPassword = null;
         try
