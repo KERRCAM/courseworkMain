@@ -2,6 +2,10 @@ package com.company;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.security.MessageDigest;
@@ -21,6 +25,16 @@ public class accountCreationFunctions { //all needs to be converted from text fi
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
+        }
+        String DatabaseLocation = System.getProperty("user.dir") + "\\courseworkDatabase.accdb";
+        try {
+            Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + DatabaseLocation, "", "");
+            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+            stmt.executeUpdate("INSERT INTO users(username)" + "VALUES (" + newUser.get(0) + ")");
+            con.close();
+        } catch (Exception e) {
+            System.out.println("Error in the SQL class: " + e);
         }
     }
 
