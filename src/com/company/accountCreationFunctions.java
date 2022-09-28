@@ -31,13 +31,13 @@ public class accountCreationFunctions { //all needs to be converted from text fi
             Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + DatabaseLocation, "", "");
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
-            stmt.executeUpdate("INSERT INTO users(username)" + "VALUES (" + newUser.get(0) + ")");
+            stmt.executeUpdate("INSERT INTO users(username)" + "VALUES ("+newUser.get(0)+")");
             con.close();
         } catch (Exception e) {
             System.out.println("Error in the SQL class: " + e);
         }
     }
-
+//"VALUES ("+newUser.get(0)+")");
     public static String userDetails(String authority) {
         String username = getUsername("enter username (must be at least 4 characters and contain no spaces)");
         String password = getPassword("enter enter password (must contain at least 1 letter and 1 number and contain no spaces and be at least 6 characters long)");
