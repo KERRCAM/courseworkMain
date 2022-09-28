@@ -97,7 +97,7 @@ public class Main {
             int i = 0;
             while ((line = br.readLine()) != null) {
                 List<String> splitLine = Arrays.asList(line.split(","));
-                for (int j = 0; j < 200; j++) { //just need to chage 200 and map in play for tutorial map version
+                for (int j = 0; j < 200; j++) { //just need to change 200 and map in play for tutorial map version
                     game.gMapInPlay[i][j] = splitLine.get(j);
                     //System.out.print(splitLine.get(i)); //test print
                 }
@@ -113,7 +113,7 @@ public class Main {
 
     public static void newMap(){
         String newMapName = getString("what is the name of the new map");
-        int rows = getPosInt("enter number of rows for new map (vertical hight)");
+        int rows = getPosInt("enter number of rows for new map (vertical height)");
         int columns = getPosInt("enter number of rows for new map (horizontal width)");
         mapToFile(newMapName,newMap, rows, columns);
     }

@@ -12,7 +12,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class accountCreationFunctions { //all needs to be converted from text file storage to database.
-
+    public static String currentUsername;
 
     public static void makeUser(){
         ArrayList<String> newUser = new ArrayList<>();
@@ -31,17 +31,18 @@ public class accountCreationFunctions { //all needs to be converted from text fi
             Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + DatabaseLocation, "", "");
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
-            stmt.executeUpdate("INSERT INTO users(username)" + "VALUES ('abcd')");
+            stmt.executeUpdate("INSERT INTO users(username)" + "VALUES ('"+currentUsername+"')");
             con.close();
         } catch (Exception e) {
             System.out.println("Error in the SQL class: " + e);
         }
     }
-//"VALUES ("+newUser.get(0)+")");
+
     public static String userDetails(String authority) {
         String username = getUsername("enter username (must be at least 4 characters and contain no spaces)");
         String password = getPassword("enter enter password (must contain at least 1 letter and 1 number and contain no spaces and be at least 6 characters long)");
         String userAuthority = (authority);
+        currentUsername = username;
         return (username + "," + password + "," + userAuthority);
     }
 
