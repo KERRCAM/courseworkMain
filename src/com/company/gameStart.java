@@ -21,7 +21,7 @@ public class gameStart {
         Main.printMap(game.gMapInPlay, 30, 200);
         int startRegion = Integer.parseInt(Main.getString("what region would you like to start in?")) - 1;
         game.gMapInPlay[Main.regionOccPos[startRegion][0]][Main.regionOccPos[startRegion][1]] = "PL";
-
+        //
 
 
 
