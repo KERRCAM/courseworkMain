@@ -8,7 +8,8 @@ public class gameStart {
         String saveName = "gameSave" + String.valueOf(userID) + ".txt";
         System.out.println(saveName);
         //Main.fileToMap(saveName); //uncomment when code is rdy
-        //game.mainGameLoop //class game and method main game loop not made yet
+        //game.gameLoop //class game and method main game loop not made yet
+        //need to run loops fo rhow many regions each player/ai controls so it doesnt hvae to be stored in database
     }
 
 
@@ -20,13 +21,13 @@ public class gameStart {
         Main.printMap(game.gMapInPlay, 30, 200);
         int startRegion = Integer.parseInt(Main.getString("what region would you like to start in?")) - 1;
         game.gMapInPlay[Main.regionOccPos[startRegion][0]][Main.regionOccPos[startRegion][1]] = "PL";
-        //game.mainGameLoop //class game and method main game loop not made yet
+        //game.gameLoop //class game and method main game loop not made yet
         //
 
 
 
 
-        //game.mainGameLoop // call once game start processes are done
+        //game.gameLoop // call once game start processes are done
 
     }
 
