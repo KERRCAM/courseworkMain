@@ -40,7 +40,7 @@ public class loginFunctions {
                 userIndexPos = i;
             }
         }
-        return(userIndexPos - 1);
+        return(userIndexPos - 3);
     }
 
 

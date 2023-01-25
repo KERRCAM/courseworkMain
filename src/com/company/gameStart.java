@@ -15,12 +15,12 @@ public class gameStart {
     public static void newGame(){
         //all goes in game save function instead
         //int userID = loginFunctions.userIDfinder();
-        //int saveNo = userID
-        //String saveName = "gameSave" + String.valueOf(saveNo);
+        //String saveName = "gameSave" + String.valueOf(userID) + ".txt";
         Main.fileToMap("gMap1.txt");
         Main.printMap(game.gMapInPlay, 30, 200);
         int startRegion = Integer.parseInt(Main.getString("what region would you like to start in?")) - 1;
         game.gMapInPlay[Main.regionOccPos[startRegion][0]][Main.regionOccPos[startRegion][1]] = "PL";
+        //game.mainGameLoop //class game and method main game loop not made yet
         //
 
 
