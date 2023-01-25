@@ -44,6 +44,27 @@ public class game {
         gameRunning = false;
     }
 
+
+    public void invadeRegion(){
+
+    }
+
+
+    public void moveTroops(){
+
+    }
+
+
+    public void specialAttack(){
+
+    }
+
+
+   //etc
+
+
+
+
 }
 
 
