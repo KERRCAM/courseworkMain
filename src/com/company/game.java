@@ -10,7 +10,7 @@ scores table  (userid, time, efficiency, combined)
 public class game {
     public static String gMapInPlay[][] = new String[30][200];
     public boolean gameRunning = true;
-    public static int gameInfo[] = {0,0,0,0}; //time, efficiency, money, food
+    public static int gameInfo[] = {0,0,100,100}; //time, efficiency, money, food
     public static int factionInfo[][] = {{0,0},{0,0},{0,0},{0,0}}; //(cap1, regionOccNum1),(cap2, regionOccNum2),(cap3, regionOccNum3),(cap4, regionOccNum4)
     public static long initialTime;
     public static long finalTime;
@@ -34,7 +34,7 @@ public class game {
 
 
     public static void playerTurn(){
-            System.out.println("");
+        System.out.println("");
     }
 
 

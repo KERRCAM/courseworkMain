@@ -9,9 +9,9 @@ public class gameStart {
         System.out.println(saveName);
         //Main.fileToMap(saveName); //uncomment when code is rdy
         regionOccCounter(); //counts number of regions controlled by each faction and adjusts game faction information array
-        //need to check for save not existing so no crash - kick to menu if doesnt exist
+        //need to check for save not existing so no crash - kick to menu if doesnt exist or try catch (probably best)
         game.initialTime = System.currentTimeMillis();
-        //game.gameLoop //class game and method main game loop not made yet
+        //game.gameLoop //uncomment when game loop is rdy
     }
 
 
@@ -22,18 +22,17 @@ public class gameStart {
         int startRegion = Integer.parseInt(Main.getString("what region would you like to start in?")) - 1;
         game.gMapInPlay[Main.regionOccPos[startRegion][0]][Main.regionOccPos[startRegion][1]] = "PL";
         game.initialTime = System.currentTimeMillis();
-        //game.gameLoop //class game and method main game loop not made yet
-        //
+        //game.gameLoop //uncomment when game loop is rdy
 
 
 
 
-        //game.gameLoop // call once game start processes are done
 
     }
 
 
     public static void regionOccCounter(){
+        //int count = 0; count and all related in this method is for test run of empty map
         for (int i = 0; i < 49; i++) {
             String occupation = game.gMapInPlay[Main.regionOccPos[i][0]][Main.regionOccPos[i][1]];
             if (occupation.equals("P1")) {
@@ -48,7 +47,17 @@ public class gameStart {
             if (occupation.equals("P4")) {
                 game.factionInfo[3][0] = game.factionInfo[3][0] + 1;
             }
+            /*
+            if (occupation.equals("NC")) {
+                count++;
+                System.out.println("yes");
+            }else{
+                System.out.println("no");
+            }
+            */
         }
+        //System.out.println(count);
     }
+
 
 }
