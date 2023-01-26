@@ -9,14 +9,13 @@ public class gameStart {
         System.out.println(saveName);
         //Main.fileToMap(saveName); //uncomment when code is rdy
         //game.gameLoop //class game and method main game loop not made yet
-        //need to run loops fo rhow many regions each player/ai controls so it doesnt hvae to be stored in database
+        //need to run loops for how many regions each player/ai controls so it doesnt have to be stored in database
+        //need to check for save not existing so no crash
     }
 
 
     public static void newGame(){
-        //all goes in game save function instead
-        //int userID = loginFunctions.userIDfinder();
-        //String saveName = "gameSave" + String.valueOf(userID) + ".txt";
+
         Main.fileToMap("gMap1.txt");
         Main.printMap(game.gMapInPlay, 30, 200);
         int startRegion = Integer.parseInt(Main.getString("what region would you like to start in?")) - 1;
