@@ -38,7 +38,7 @@ public class accountCreationFunctions { //all needs to be converted from text fi
         }
     }
 
-    public static String userDetails(String authority) {
+    public static String userDetails(String authority) { //prompts for new users username and password
         String username = getUsername("enter username (must be at least 4 characters and contain no spaces)");
         String password = getPassword("enter enter password (must contain at least 1 letter and 1 number and contain no spaces and be at least 6 characters long)");
         String userAuthority = (authority);
@@ -47,7 +47,7 @@ public class accountCreationFunctions { //all needs to be converted from text fi
     }
 
 
-    public static String getUsername(String prompt) {
+    public static String getUsername(String prompt) { //gets input for username and checks it passed parameters
         Scanner input = new Scanner(System.in);
         String strInput = "";
         boolean validUsername = false;
@@ -70,7 +70,7 @@ public class accountCreationFunctions { //all needs to be converted from text fi
     }
 
 
-    public static boolean checkUsername(String username){
+    public static boolean checkUsername(String username){ //the actual checks for a new username
         boolean valid = false;
         int checks = 0;
         if (username.contains(" ")) {
@@ -93,7 +93,7 @@ public class accountCreationFunctions { //all needs to be converted from text fi
 
 
 
-    public static String getPassword(String prompt) {
+    public static String getPassword(String prompt) { //gets password input form user checks it met parameters then sends it to be hashed
         Scanner input = new Scanner(System.in);
         String strInput = "";
         boolean validPassword = false;
@@ -117,10 +117,10 @@ public class accountCreationFunctions { //all needs to be converted from text fi
     }
 
 
-    public static String passwordHash(String inputPassword){ // hash code in try catch got online
+    public static String passwordHash(String inputPassword){ // puts passwords through MD5 hash
         String password = inputPassword;
         String hashedPassword = null;
-        try
+        try //code for hash in try from online source not made personally*
         {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(password.getBytes());
@@ -137,7 +137,7 @@ public class accountCreationFunctions { //all needs to be converted from text fi
     }
 
 
-    public static boolean checkPassword(String password){
+    public static boolean checkPassword(String password){ //runs checks for a valid password
         boolean valid = false;
         char a;
         int checks = 0;

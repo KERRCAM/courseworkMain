@@ -6,7 +6,7 @@ import java.io.FileReader;
 public class loginFunctions {
 
 
-    public static User commaSeperatedStringsSplitterUser(String userDetails) {
+    public static User commaSeperatedStringsSplitterUser(String userDetails) { //splits user data from text file and puts into user object
         String[] splitter = userDetails.split(",");
         User newUser = new User(splitter[0],splitter[1],splitter[2]);
         return (newUser);
@@ -30,7 +30,7 @@ public class loginFunctions {
     }
 
 
-    public static int userIDfinder(){
+    public static int userIDfinder(){ //gets the user ID of the current logged in user so it can be used to make or find game saves
         fileToList("users.txt");
         int userIndexPos = 0;
         String username = Main.userLoggedIn;

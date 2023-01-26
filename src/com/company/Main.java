@@ -40,7 +40,7 @@ public class Main {
 
 
     public static void printMap(String mapName[][], int row, int column) {
-
+        //colour values for printed text
         String ANSI_RESET = "\u001B[0m";
         String ANSI_YELLOW = "\u001B[33m";
         String ANSI_BLACK = "\u001B[30m";
@@ -49,7 +49,7 @@ public class Main {
         String ANSI_BLUE = "\u001B[34m";
         String ANSI_PURPLE = "\u001B[35m";
         String ANSI_CYAN = "\u001B[36m";
-
+        //print loop for the maps checks each character and prints them in their corresponding colours
         for (int i = 0; i < row; i++) {
             System.out.println("");
             for (int j = 0; j < column; j++) {
@@ -79,9 +79,9 @@ public class Main {
     }
 
 
-    public static void mapToFile(String fileName, String mapName[][], int row, int column) {
+    public static void mapToFile(String fileName, String mapName[][], int row, int column) { //coverts given map into file with given name
         try {
-            FileWriter myWriter = new FileWriter(fileName, false); //Would need to change for each map, change name to be variable (done)
+            FileWriter myWriter = new FileWriter(fileName, false);
             //myWriter.write( + "\n"); // writes to file
             for (int i = 0; i < row; i++){
                 for (int j = 0; j < column; j++) {
@@ -98,7 +98,7 @@ public class Main {
     }
 
 
-    public static void fileToMap(String fileName) {
+    public static void fileToMap(String fileName) { //gets file of given name and splits it so it can be put into the gMapInPlay
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             int i = 0;
@@ -118,7 +118,7 @@ public class Main {
     }
 
 
-    public static void newMap(){
+    public static void newMap(){ //infrastructure for if you wanted to add a new main map
         String newMapName = getString("what is the name of the new map");
         int rows = getPosInt("enter number of rows for new map (vertical height)");
         int columns = getPosInt("enter number of rows for new map (horizontal width)");
@@ -128,7 +128,7 @@ public class Main {
 
 
 
-    public static String getString(String prompt) {
+    public static String getString(String prompt) { //general method for getting a string anywhere in the program
         Scanner input = new Scanner(System.in);
         String strInput = "";
         try {
@@ -142,7 +142,7 @@ public class Main {
     }
 
 
-    public static int getPosInt(String prompt) {
+    public static int getPosInt(String prompt) { //general method for getting an integer anywhere in the program
         Scanner input = new Scanner(System.in);
         int intInput = 0;
         while (intInput < 1) {
@@ -153,7 +153,7 @@ public class Main {
     }
 
 
-    public static void adminMenu() {
+    public static void adminMenu() { //menu with all admin options
         boolean exit = false;
         while (exit == false) {
             String action = getString("what would you like to (enter number of action): \n (1)-add map- \n (2)-exit- ");
@@ -167,7 +167,7 @@ public class Main {
     }
 
 
-    public static void userMenu() {
+    public static void userMenu() { //menu with limited user options
         boolean exit = false;
         while (exit == false) {
             String option = getString("what would you like to (enter number of action): \n (1)-load game save-  \n (2)-start new game (warning new game will overwrite any saved game)- \n (3)-view tutorial- \n (4)-view leaderboards- \n (5)-exit-");
@@ -240,19 +240,19 @@ public class Main {
         //fileToMap("gMap1.txt"); // loads map in named text file to active gmap
         //printMap(gMap1, 30, 200); //prints active gmap
 
-        String option = getString("would you like to (enter number of action): \n (1)-log in- \n (2)-sign up- \n (3)-exit-");
+        String option = getString("would you like to (enter number of action): \n (1)-log in- \n (2)-sign up- \n (3)-exit-"); //initial menu for login and sign up
         boolean exit = false;
-        while(exit == false) {
+        while(exit == false) { //used to check if the user that logged in is valid and if they are a normal user or an admin account
             if (option.equals("1")) {
                 int logInStatus = loginFunctions.logIn();
-                if (logInStatus == 0) {
+                if (logInStatus == 0) { //0 = not valid user name or password entered
                     System.out.println("username or password incorrect");
                 }
-                if (logInStatus == 1) {
+                if (logInStatus == 1) { //1 = account belongs to a user
                     System.out.println("user logged in");
                     userMenu();
                 }
-                if (logInStatus == 2) {
+                if (logInStatus == 2) { //2 = account belongs to an admin
                     System.out.println("admin logged in");
                     adminMenu();
                 }

@@ -7,7 +7,7 @@ public class gameStart {
         int userID = loginFunctions.userIDfinder();
         String saveName = "gameSave" + String.valueOf(userID) + ".txt";
         System.out.println(saveName);
-        //Main.fileToMap(saveName); //uncomment when code is rdy
+        //Main.fileToMap(saveName); //uncomment when try catch for no existing file is done
         regionOccCounter(); //counts number of regions controlled by each faction and adjusts game faction information array
         //need to check for save not existing so no crash - kick to menu if doesnt exist or try catch (probably best)
         game.initialTime = System.currentTimeMillis();
