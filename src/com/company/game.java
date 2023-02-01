@@ -33,13 +33,33 @@ public class game {
     }
 
 
-    public static void playerTurn(){
-        System.out.println("");
+    public void playerTurn(){
+        troopPlace();
+        boolean exit = false;
+        while (exit == false) {
+            String option = Main.getString("what would you like to (enter number of action): \n (1)-invade region-  \n (2)-move troops- \n (3)-make troops- \n (4)-special attacks- \n (5)-save and exit-");
+            if (option.equals("1")) {
+                invadeRegion();
+            }
+            if (option.equals("2")) {
+                moveTroops();
+            }
+            if (option.equals("3")) {
+                makeTroops();
+            }
+            if (option.equals("4")) {
+                specialAttacks();
+            }
+            if (option.equals("5")) {
+                saveGame();
+                exit = true;
+            }
+        }
     }
 
 
     public static void enemyTurns(){
-            System.out.println("");
+        System.out.println("");
     }
 
 
@@ -55,21 +75,45 @@ public class game {
 
 
     public void invadeRegion(){
-
+        System.out.println("");
     }
 
 
     public void moveTroops(){
-
+        int exitRegion = Main.getInt("what region would you like to move troops from?", 0, 50);
+        int troopNum = Main.getInt("how many troops would you like to move from the region", 0, Integer.valueOF(gMapInPlay[Main.regionArmPos[exitRegion][0]][Main.regionArmPos[exitRegion][1]]));
+        int targetRegion = Main.getInt("what region would you like to move troops to?", 0, 50);
     }
 
 
-    public void specialAttack(){
-
+    public void makeTroops(){
+        System.out.println("");
     }
 
 
-   //etc
+    public void specialAttacks(){
+        System.out.println("");
+    }
+
+
+    public void troopPlace(){ //gets user input for target region and troop amount, loops until all new troops are placed
+        int newTroops = factionInfo[0][1];
+        while (newTroops > 0) {
+            System.out.println("you have" + newTroops + "new troops left to place");
+            int targetRegion = Main.getInt("what region would you like to place some new troops in?",0, 50);
+            if (gMapInPlay[Main.regionOccPos[targetRegion][0]][Main.regionOccPos[targetRegion][1]].equals("PL")) {
+                int troopNum = Main.getInt("how many troops would you like to place in this region?", 0, newTroops);
+                gMapInPlay[Main.regionArmPos[targetRegion][0]][Main.regionArmPos[targetRegion][1]] = gMapInPlay[Main.regionArmPos[targetRegion][0]][Main.regionArmPos[targetRegion][1]] + troopNum; //adds troops to whatever is already there using the navigation arrays
+            }else {
+                System.out.println("you don't control this region");
+            }
+        }
+    }
+
+
+    public void passiveGain(){
+        System.out.println("");
+    }
 
 
 

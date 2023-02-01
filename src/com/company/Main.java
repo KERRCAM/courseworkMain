@@ -21,6 +21,7 @@ public class Main {
     public static ArrayList<User> fileContentsUsers = new ArrayList<>();
     //new map is filled in with any new map that needs to made into a text file
     public static String newMap[][] = {{}};
+    // navigation arrays of extra data used to get coordinates and data about teh map
     public static int regionOccPos[][] = {{3,5},{14,4},{24,3},{2,20},{8,15},{2,33},{6,24},{13,17},{19,15},{26,15},{23,22},{26,32},{13,38},{18,41},{8,51},{15,51},{21,53},{7,65},{13,68},{19,68},{9,82},{14,91},{13,108},{15,116} ,{2,92},{3,103},{4,120},{3,132},{2,151},{9,134},{6,149},{12,150},{3,164},{7,165},{15,166},{11,176},{4,182},{2,193},{27,86},{23,104},{27,103},{21,123},{27,122},{25,137},{27,145},{27,160},{26,173},{23,185},{27,191}}; // {2,5} = 3rd row down 6th column across // index pos for region id
     public static int regionArmPos[][] = {{4,5},{15,4},{25,3},{3,20},{9,15},{3,33},{7,24},{14,17},{20,15},{27,15},{24,22},{27,32},{14,38},{19,41},{9,51},{16,51},{22,53},{8,65},{14,68},{20,68},{10,82},{15,91},{14,108},{16,116},{3,92},{4,103},{5,120},{4,132},{3,151},{10,134},{7,149},{13,150},{4,164},{8,165},{16,166},{12,176},{5,182},{3,193},{28,86},{24,104},{28,103},{22,123},{28,122},{26,137},{28,145},{27,160},{27,173},{24,185},{28,191}}; // index pos for region troop number
     public static int regionSharedBorders[][] = {{4,5,2,7},{1,5,8,9,3},{2,9,11,10},{1,5,7,6},{1,4,7,2,8},{4,7,13},{6,4,1,5,8},{7,5,2,9,13},{8,2,3,10,11},{3,9,11,12},{9,3,10,12},{10,11,14},{6,8,14,16,15},{13,15,16,17,12},{18,13,14,16},{18,15,13,14,17,20,19},{14,16,20,39},{15,16,19,21},{18,21,22,20,16},{17,16,19,22},{25,18,19,22},{21,19,20,23},{22,26,40,24},{23},{21,26},{25,23,27},{26,28,30},{27,30,29,31},{28,31,33},{27,28,31,32,44},{28,30,32,34,29},{30,31,34,36,35},{29,34,37},{33,31,37,32,36},{32,36,48},{35,32,34,37},{36,34,33,38},{37},{17,40,41},{39,23,42,41,43},{39,40,43},{40,43,44},{41,40,42,44},{30,42,43,45},{44,46},{45,47},{46,48,49},{47,49},{47,48}}; // all borders to each region
@@ -120,8 +121,8 @@ public class Main {
 
     public static void newMap(){ //infrastructure for if you wanted to add a new main map
         String newMapName = getString("what is the name of the new map");
-        int rows = getPosInt("enter number of rows for new map (vertical height)");
-        int columns = getPosInt("enter number of rows for new map (horizontal width)");
+        int rows = getInt("enter number of rows for new map (vertical height)", 0, 1000);
+        int columns = getInt("enter number of rows for new map (horizontal width)", 0, 1000);
         mapToFile(newMapName,newMap, rows, columns);
     }
 
@@ -142,10 +143,10 @@ public class Main {
     }
 
 
-    public static int getPosInt(String prompt) { //general method for getting an integer anywhere in the program
+    public static int getInt(String prompt, int lower, int upper) { //general method for getting an integer anywhere in the program
         Scanner input = new Scanner(System.in);
         int intInput = 0;
-        while (intInput < 1) {
+        while (intInput < upper && intInput > lower) {
             System.out.println(prompt);
             intInput = input.nextInt();
         }
