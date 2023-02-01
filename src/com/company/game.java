@@ -81,8 +81,10 @@ public class game {
 
     public void moveTroops(){
         int exitRegion = Main.getInt("what region would you like to move troops from?", 0, 50);
-        int troopNum = Main.getInt("how many troops would you like to move from the region", 0, Integer.valueOF(gMapInPlay[Main.regionArmPos[exitRegion][0]][Main.regionArmPos[exitRegion][1]]));
+        int troopNum = Main.getInt("how many troops would you like to move from the region", 0, Integer.parseInt(gMapInPlay[Main.regionArmPos[exitRegion][0]][Main.regionArmPos[exitRegion][1]]));
         int targetRegion = Main.getInt("what region would you like to move troops to?", 0, 50);
+        gMapInPlay[Main.regionArmPos[exitRegion][0]][Main.regionArmPos[exitRegion][1]] = String.valueOf(Integer.parseInt(gMapInPlay[Main.regionArmPos[exitRegion][0]][Main.regionArmPos[exitRegion][1]]) - troopNum);
+        gMapInPlay[Main.regionArmPos[targetRegion][0]][Main.regionArmPos[targetRegion][1]] = String.valueOf(Integer.parseInt(gMapInPlay[Main.regionArmPos[targetRegion][0]][Main.regionArmPos[targetRegion][1]]) + troopNum);
     }
 
 
@@ -103,7 +105,7 @@ public class game {
             int targetRegion = Main.getInt("what region would you like to place some new troops in?",0, 50);
             if (gMapInPlay[Main.regionOccPos[targetRegion][0]][Main.regionOccPos[targetRegion][1]].equals("PL")) {
                 int troopNum = Main.getInt("how many troops would you like to place in this region?", 0, newTroops);
-                gMapInPlay[Main.regionArmPos[targetRegion][0]][Main.regionArmPos[targetRegion][1]] = gMapInPlay[Main.regionArmPos[targetRegion][0]][Main.regionArmPos[targetRegion][1]] + troopNum; //adds troops to whatever is already there using the navigation arrays
+                gMapInPlay[Main.regionArmPos[targetRegion][0]][Main.regionArmPos[targetRegion][1]] = String.valueOf(Integer.parseInt(gMapInPlay[Main.regionArmPos[targetRegion][0]][Main.regionArmPos[targetRegion][1]]) + troopNum); //adds troops to whatever is already there using the navigation arrays
             }else {
                 System.out.println("you don't control this region");
             }
