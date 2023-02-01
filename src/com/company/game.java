@@ -25,7 +25,7 @@ public class game {
     }
 
 
-    public void gameLoop(){ // avoids recursion as it could cause memory issues in a long lasting game where the player has many turns
+    public void gameLoop(){ // avoids recursion as it could cause memory issues in a long-lasting game where the player has many turns
         while (gameRunning == true) { //repeats player turn and enemy turns until player either saves and exits, wins or loses
             playerTurn();
             enemyTurns();
@@ -34,7 +34,7 @@ public class game {
 
 
     public void playerTurn(){
-        passiveGain(); // start off each turn begins with placing the troops passivly gained and also adding the money and food gained
+        passiveGain(); // start off each turn begins with placing the troops passively gained and also adding the money and food gained
         boolean exit = false;
         while (exit == false) {
             String option = Main.getString("what would you like to (enter number of action): \n (1)-invade region-  \n (2)-move troops- \n (3)-make troops- \n (4)-special attacks- \n (5)-save and exit-");
@@ -74,7 +74,7 @@ public class game {
     }
 
 
-    public void invadeRegion(){ // can only attack once a turn and you must share a border
+    public void invadeRegion(){ // can only attack once a turn, and you must share a border
         System.out.println("");
     }
 
@@ -124,7 +124,7 @@ public class game {
     }
 
 
-    public void passiveGain(){ //gets the troops food and money gained passivly from controlled regions
+    public void passiveGain(){ //gets the troops food and money gained passively from controlled regions
         System.out.println("");
     }
 
