@@ -34,7 +34,7 @@ public class game {
 
 
     public void playerTurn(){
-        troopPlace();
+        troopPlace(factionInfo[0][1]);
         boolean exit = false;
         while (exit == false) {
             String option = Main.getString("what would you like to (enter number of action): \n (1)-invade region-  \n (2)-move troops- \n (3)-make troops- \n (4)-special attacks- \n (5)-save and exit-");
@@ -89,7 +89,18 @@ public class game {
 
 
     public void makeTroops(){
-        System.out.println("");
+        int limit = 0;
+        System.out.println("you have " + gameInfo[2] + " money");
+        System.out.println("you have " + gameInfo[3] + " food");
+        int moneyLim = gameInfo[2] / 10;
+        int foodLim = gameInfo[3] / 10;
+        if (moneyLim < foodLim) {
+            limit = moneyLim;
+        }else {
+            limit = foodLim;
+        }
+        int newTroops = Main.getInt("how many troops would you like to make?", 0, limit);
+        troopPlace(newTroops);
     }
 
 
@@ -98,10 +109,10 @@ public class game {
     }
 
 
-    public void troopPlace(){ //gets user input for target region and troop amount, loops until all new troops are placed
-        int newTroops = factionInfo[0][1];
+    public void troopPlace(int troopsToPlace){ //gets user input for target region and troop amount, loops until all new troops are placed
+        int newTroops = troopsToPlace;
         while (newTroops > 0) {
-            System.out.println("you have" + newTroops + "new troops left to place");
+            System.out.println("you have " + newTroops + " new troops left to place");
             int targetRegion = Main.getInt("what region would you like to place some new troops in?",0, 50);
             if (gMapInPlay[Main.regionOccPos[targetRegion][0]][Main.regionOccPos[targetRegion][1]].equals("PL")) {
                 int troopNum = Main.getInt("how many troops would you like to place in this region?", 0, newTroops);
