@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.Random;
+
 public class gameStart {
 
 
@@ -16,12 +18,8 @@ public class gameStart {
 
 
     public static void newGame(){
-
         Main.fileToMap("gMap1.txt");
-        Main.printMap(game.gMapInPlay, 30, 200);
-        int startRegion = Integer.parseInt(Main.getString("what region would you like to start in?")) - 1;
-        game.gMapInPlay[Main.regionOccPos[startRegion][0]][Main.regionOccPos[startRegion][1]] = "PL";
-        //call method for random selection of other 3 capitols
+        capitolAssignment();
         game.initialTime = System.currentTimeMillis();
         //game.gameLoop //uncomment when game loop is rdy
 
@@ -58,6 +56,36 @@ public class gameStart {
             */
         }
         //System.out.println(count);
+    }
+
+
+    public static void capitolAssignment(){
+        int p2Start = 0;
+        int p3Start = 0;
+        int p4Start = 0;
+        Main.printMap(game.gMapInPlay, 30, 200);
+        int startRegion = Main.getInt("what region would like to start in?", 0, 50);
+        p2Start = uniqueRandomNum(startRegion, p2Start, p3Start, p4Start);
+        p3Start = uniqueRandomNum(startRegion, p2Start, p3Start, p4Start);
+        p4Start = uniqueRandomNum(startRegion, p2Start, p3Start, p4Start);
+        game.gMapInPlay[Main.regionOccPos[startRegion - 1][0]][Main.regionOccPos[startRegion - 1][1]] = "P1";
+        game.gMapInPlay[Main.regionOccPos[p2Start - 1][0]][Main.regionOccPos[p2Start - 1][1]] = "P2";
+        game.gMapInPlay[Main.regionOccPos[p3Start - 1][0]][Main.regionOccPos[p3Start - 1][1]] = "P3";
+        game.gMapInPlay[Main.regionOccPos[p4Start - 1][0]][Main.regionOccPos[p4Start - 1][1]] = "P4";
+    }
+
+
+    public static int uniqueRandomNum(int p1, int p2, int p3, int p4){
+        int region = 0;
+        boolean valid = false;
+        Random random = new Random();
+        while (valid == false){
+            region = random.nextInt(49);
+            if (region != p1 && region != p2 && region != p3 && region != p4){
+                valid = true;
+            }
+        }
+        return(region);
     }
 
 
