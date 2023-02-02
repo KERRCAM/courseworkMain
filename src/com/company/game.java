@@ -7,8 +7,6 @@ game info table (userid, time, efficiency, money, food, cap1, cap2, cap3, cap4)
 scores table  (userid, time, efficiency, combined)
 */
 
-import java.util.Scanner;
-
 public class game {
     public static String gMapInPlay[][] = new String[30][200];
     public boolean gameRunning = true;
@@ -80,7 +78,11 @@ public class game {
         int exitRegion = Main.getInt("what region would you like to move troops from?", 0, 50);
         int troopNum = Main.getInt("how many troops would you like to move from the region", 0, Integer.parseInt(gMapInPlay[Main.regionArmPos[exitRegion][0]][Main.regionArmPos[exitRegion][1]])); //limit of current troop count of that region ensures there must be at least 1 troop left in the region
         int targetRegion = Main.getInt("what region would you like to move troops to?", 0, 50);
-        checkRegionBorderValid(exitRegion, Main.regionBorderAmounts[exitRegion], "PL");
+        boolean valid = checkRegionBorderValid(exitRegion, targetRegion, Main.regionBorderAmounts[exitRegion], "PL");
+        if (valid == true && gMapInPlay[Main.regionOccPos[exitRegion - 1][0]][Main.regionOccPos[exitRegion - 1][1]].equals("PL") && !(gMapInPlay[Main.regionOccPos[targetRegion - 1][0]][Main.regionOccPos[targetRegion - 1][1]].equals("PL"))){
+            gMapInPlay[Main.regionArmPos[exitRegion - 1][0]][Main.regionArmPos[exitRegion - 1][1]] = String.valueOf(Integer.parseInt(gMapInPlay[Main.regionArmPos[exitRegion - 1][0]][Main.regionArmPos[exitRegion - 1][1]]) - troopNum); // takes troops of region they are being moved from
+            gMapInPlay[Main.regionArmPos[targetRegion - 1][0]][Main.regionArmPos[targetRegion - 1][1]] = String.valueOf(Integer.parseInt(gMapInPlay[Main.regionArmPos[targetRegion - 1][0]][Main.regionArmPos[targetRegion - 1][1]]) + troopNum); // adds troops taken off onto the region they are being moved to
+        }
     }
 
 
@@ -88,9 +90,11 @@ public class game {
         int exitRegion = Main.getInt("what region would you like to move troops from?", 0, 50);
         int troopNum = Main.getInt("how many troops would you like to move from the region", 0, Integer.parseInt(gMapInPlay[Main.regionArmPos[exitRegion - 1][0]][Main.regionArmPos[exitRegion - 1][1]])); //limit of current troop count of that region ensures there must be at least 1 troop left in the region
         int targetRegion = Main.getInt("what region would you like to move troops to?", 0, 50);
-        gMapInPlay[Main.regionArmPos[exitRegion - 1][0]][Main.regionArmPos[exitRegion - 1][1]] = String.valueOf(Integer.parseInt(gMapInPlay[Main.regionArmPos[exitRegion - 1][0]][Main.regionArmPos[exitRegion - 1][1]]) - troopNum); // takes troops of region they are being moved from
-        gMapInPlay[Main.regionArmPos[targetRegion - 1][0]][Main.regionArmPos[targetRegion - 1][1]] = String.valueOf(Integer.parseInt(gMapInPlay[Main.regionArmPos[targetRegion - 1][0]][Main.regionArmPos[targetRegion - 1][1]]) + troopNum); // adds troops taken off onto the region they are being moved to
-    }
+        if (gMapInPlay[Main.regionOccPos[exitRegion - 1][0]][Main.regionOccPos[exitRegion - 1][1]].equals("PL") && gMapInPlay[Main.regionOccPos[targetRegion - 1][0]][Main.regionOccPos[targetRegion - 1][1]].equals("PL")){
+            gMapInPlay[Main.regionArmPos[exitRegion - 1][0]][Main.regionArmPos[exitRegion - 1][1]] = String.valueOf(Integer.parseInt(gMapInPlay[Main.regionArmPos[exitRegion - 1][0]][Main.regionArmPos[exitRegion - 1][1]]) - troopNum); // takes troops of region they are being moved from
+            gMapInPlay[Main.regionArmPos[targetRegion - 1][0]][Main.regionArmPos[targetRegion - 1][1]] = String.valueOf(Integer.parseInt(gMapInPlay[Main.regionArmPos[targetRegion - 1][0]][Main.regionArmPos[targetRegion - 1][1]]) + troopNum); // adds troops taken off onto the region they are being moved to
+            }
+       }
 
 
     public void makeTroops(){
@@ -134,10 +138,19 @@ public class game {
     }
 
 
-    public static int checkRegionBorderValid(int exitRegion, int borderNum, String attacker) { //checks for a valid attack target when invading
+    public static boolean checkRegionBorderValid(int exitRegion, int targetRegion, int borderNum, String attacker) { //checks for a valid attack target when invading
+        String occupation = gMapInPlay[Main.regionOccPos[targetRegion - 1][0]][Main.regionOccPos[targetRegion - 1][1]];
         boolean validity = false;
-
-        return (vaildity);
+        for (int i = 0; i < borderNum; i++) {
+            int current = Main.regionSharedBorders[exitRegion][i];
+            if (current == targetRegion && (occupation.equals("P1") || occupation.equals("P2") || occupation.equals("P3") || occupation.equals("P4") && !(occupation.equals(attacker)))) {
+                validity = true;
+            }
+        }
+        if (validity = false){
+            System.out.println("invalid attack target");
+        }
+        return (validity);
     }
 
 
