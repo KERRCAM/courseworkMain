@@ -72,6 +72,10 @@ public class gameStart {
         game.gMapInPlay[Main.regionOccPos[p2Start - 1][0]][Main.regionOccPos[p2Start - 1][1]] = "P2";
         game.gMapInPlay[Main.regionOccPos[p3Start - 1][0]][Main.regionOccPos[p3Start - 1][1]] = "P3";
         game.gMapInPlay[Main.regionOccPos[p4Start - 1][0]][Main.regionOccPos[p4Start - 1][1]] = "P4";
+        game.factionInfo[0][0] = startRegion;
+        game.factionInfo[1][0] = p2Start;
+        game.factionInfo[2][0] = p3Start;
+        game.factionInfo[3][0] = p4Start;
     }
 
 
