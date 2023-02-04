@@ -146,8 +146,8 @@ public class Main {
 
     public static int getInt(String prompt, int lower, int upper) { //general method for getting an integer anywhere in the program
         Scanner input = new Scanner(System.in);
-        int intInput = 0;
-        while (intInput < upper && intInput > lower) {
+        int intInput = -1;
+        while (intInput > upper || intInput < lower) {
             System.out.println(prompt);
             intInput = input.nextInt();
         }

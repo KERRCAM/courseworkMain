@@ -21,7 +21,7 @@ public class gameStart {
         Main.fileToMap("gMap1.txt");
         capitolAssignment();
         game.initialTime = System.currentTimeMillis();
-        //game.gameLoop //uncomment when game loop is rdy
+        game.gameLoop(); //uncomment when game loop is rdy
 
 
 

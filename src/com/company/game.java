@@ -9,7 +9,7 @@ scores table  (userid, time, efficiency, combined)
 
 public class game {
     public static String gMapInPlay[][] = new String[30][200];
-    public boolean gameRunning = true;
+    public static boolean gameRunning = true;
     public static int gameInfo[] = {0,0,100,100}; //time, efficiency, money, food
     public static int factionInfo[][] = {{0,0},{0,0},{0,0},{0,0}}; //(cap1, regionOccNum1),(cap2, regionOccNum2),(cap3, regionOccNum3),(cap4, regionOccNum4)
     public static long initialTime;
@@ -25,7 +25,7 @@ public class game {
     }
 
 
-    public void gameLoop(){ // avoids recursion as it could cause memory issues in a long-lasting game where the player has many turns
+    public static void gameLoop(){ // avoids recursion as it could cause memory issues in a long-lasting game where the player has many turns
         while (gameRunning == true) { //repeats player turn and enemy turns until player either saves and exits, wins or loses
             playerTurn();
             enemyTurns();
@@ -33,7 +33,7 @@ public class game {
     }
 
 
-    public void playerTurn(){
+    public static void playerTurn(){
         passiveGain(); // start off each turn begins with placing the troops passively gained and also adding the money and food gained
         boolean exit = false;
         while (exit == false) {
@@ -63,7 +63,7 @@ public class game {
     }
 
 
-    public void saveGame(){
+    public static void saveGame(){
         int userID = loginFunctions.userIDfinder();
         String saveName = "gameSave" + String.valueOf(userID) + ".txt"; //just overwrites save if already exists
         finalTime = System.currentTimeMillis();
@@ -74,7 +74,7 @@ public class game {
     }
 
 
-    public void invadeRegion(){ // can only attack once a turn, and you must share a border
+    public static void invadeRegion(){ // can only attack once a turn, and you must share a border
         int exitRegion = Main.getInt("what region would you like to move troops from?", 0, 50);
         int troopNum = Main.getInt("how many troops would you like to move from the region", 0, Integer.parseInt(gMapInPlay[Main.regionArmPos[exitRegion][0]][Main.regionArmPos[exitRegion][1]])); //limit of current troop count of that region ensures there must be at least 1 troop left in the region
         int targetRegion = Main.getInt("what region would you like to move troops to?", 0, 50);
@@ -86,7 +86,7 @@ public class game {
     }
 
 
-    public void moveTroops(){ // can move troops as much as you want in a turn between any of your controlled regions
+    public static void moveTroops(){ // can move troops as much as you want in a turn between any of your controlled regions
         int exitRegion = Main.getInt("what region would you like to move troops from?", 0, 50);
         int troopNum = Main.getInt("how many troops would you like to move from the region", 0, Integer.parseInt(gMapInPlay[Main.regionArmPos[exitRegion - 1][0]][Main.regionArmPos[exitRegion - 1][1]])); //limit of current troop count of that region ensures there must be at least 1 troop left in the region
         int targetRegion = Main.getInt("what region would you like to move troops to?", 0, 50);
@@ -97,7 +97,7 @@ public class game {
        }
 
 
-    public void makeTroops(){
+    public static void makeTroops(){
         int limit = 0; // the limit is got from getting the limit of how many troops can be made from the current food and money the player has and taking the lower value
         System.out.println("you have " + gameInfo[2] + " money");
         System.out.println("you have " + gameInfo[3] + " food");
@@ -113,12 +113,12 @@ public class game {
     }
 
 
-    public void specialAttacks(){
+    public static void specialAttacks(){
         System.out.println("");
     }
 
 
-    public void troopPlace(int troopsToPlace){ //gets user input for target region and troop amount, loops until all new troops are placed
+    public static void troopPlace(int troopsToPlace){ //gets user input for target region and troop amount, loops until all new troops are placed
         int newTroops = troopsToPlace;
         while (newTroops > 0) {
             System.out.println("you have " + newTroops + " new troops left to place");
@@ -133,7 +133,7 @@ public class game {
     }
 
 
-    public void passiveGain(){ //gets the troops food and money gained passively from controlled regions
+    public static void passiveGain(){ //gets the troops food and money gained passively from controlled regions
         System.out.println("");
     }
 
