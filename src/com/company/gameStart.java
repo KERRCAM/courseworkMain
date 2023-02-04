@@ -64,15 +64,19 @@ public class gameStart {
         int p3Start = 0;
         int p4Start = 0;
         Main.printMap(game.gMapInPlay, 30, 200);
-        int startRegion = Main.getInt("what region would like to start in?", 0, 50);
-        p2Start = uniqueRandomNum(startRegion, p2Start, p3Start, p4Start);
+        int startRegion = Main.getInt("what region would like to start in?", 0, 50); //gets the users input for their stating region
+        p2Start = uniqueRandomNum(startRegion, p2Start, p3Start, p4Start); //randomly selects unique start region for the 3 enemies
         p3Start = uniqueRandomNum(startRegion, p2Start, p3Start, p4Start);
         p4Start = uniqueRandomNum(startRegion, p2Start, p3Start, p4Start);
-        game.gMapInPlay[Main.regionOccPos[startRegion - 1][0]][Main.regionOccPos[startRegion - 1][1]] = "P1";
+        game.gMapInPlay[Main.regionOccPos[startRegion - 1][0]][Main.regionOccPos[startRegion - 1][1]] = "P1"; //changes the map to have the occupation of the capitols
         game.gMapInPlay[Main.regionOccPos[p2Start - 1][0]][Main.regionOccPos[p2Start - 1][1]] = "P2";
         game.gMapInPlay[Main.regionOccPos[p3Start - 1][0]][Main.regionOccPos[p3Start - 1][1]] = "P3";
         game.gMapInPlay[Main.regionOccPos[p4Start - 1][0]][Main.regionOccPos[p4Start - 1][1]] = "P4";
-        game.factionInfo[0][0] = startRegion;
+        game.gMapInPlay[Main.regionArmPos[startRegion - 1][0]][Main.regionArmPos[startRegion - 1][1]] = "05"; //changes the map to have 5 troops at each of the capitols
+        game.gMapInPlay[Main.regionArmPos[p2Start - 1][0]][Main.regionArmPos[p2Start - 1][1]] = "05";
+        game.gMapInPlay[Main.regionArmPos[p3Start - 1][0]][Main.regionArmPos[p3Start - 1][1]] = "05";
+        game.gMapInPlay[Main.regionArmPos[p4Start - 1][0]][Main.regionArmPos[p4Start - 1][1]] = "05";
+        game.factionInfo[0][0] = startRegion; //adds the capitols to faction info
         game.factionInfo[1][0] = p2Start;
         game.factionInfo[2][0] = p3Start;
         game.factionInfo[3][0] = p4Start;
