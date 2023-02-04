@@ -76,13 +76,26 @@ public class game {
 
     public static void invadeRegion(){ // can only attack once a turn, and you must share a border
         int exitRegion = Main.getInt("what region would you like to move troops from?", 0, 50);
-        int troopNum = Main.getInt("how many troops would you like to move from the region", 0, Integer.parseInt(gMapInPlay[Main.regionArmPos[exitRegion][0]][Main.regionArmPos[exitRegion][1]])); //limit of current troop count of that region ensures there must be at least 1 troop left in the region
+        int troopNum = Main.getInt("how many troops would you like to move from the region", 0, Integer.parseInt(gMapInPlay[Main.regionArmPos[exitRegion - 1][0]][Main.regionArmPos[exitRegion - 1][1]])); //limit of current troop count of that region ensures there must be at least 1 troop left in the region
         int targetRegion = Main.getInt("what region would you like to move troops to?", 0, 50);
-        boolean valid = checkRegionBorderValid(exitRegion, targetRegion, Main.regionBorderAmounts[exitRegion], "PL");
-        if (valid == true && gMapInPlay[Main.regionOccPos[exitRegion - 1][0]][Main.regionOccPos[exitRegion - 1][1]].equals("PL") && !(gMapInPlay[Main.regionOccPos[targetRegion - 1][0]][Main.regionOccPos[targetRegion - 1][1]].equals("PL")) && troopNum > Integer.parseInt(gMapInPlay[Main.regionArmPos[targetRegion - 1][0]][Main.regionArmPos[targetRegion - 1][1]])){
-            gMapInPlay[Main.regionArmPos[exitRegion - 1][0]][Main.regionArmPos[exitRegion - 1][1]] = String.valueOf(Integer.parseInt(gMapInPlay[Main.regionArmPos[exitRegion - 1][0]][Main.regionArmPos[exitRegion - 1][1]]) - troopNum); // takes troops of region they are being moved from
-            gMapInPlay[Main.regionArmPos[targetRegion - 1][0]][Main.regionArmPos[targetRegion - 1][1]] = String.valueOf(troopNum - Integer.parseInt(gMapInPlay[Main.regionArmPos[targetRegion - 1][0]][Main.regionArmPos[targetRegion - 1][1]])); // takes away teh number of troops at target region from the invading force
+        boolean valid = checkRegionBorderValid(exitRegion, targetRegion, Main.regionBorderAmounts[exitRegion], "P1");
+        if (valid == true && gMapInPlay[Main.regionOccPos[exitRegion - 1][0]][Main.regionOccPos[exitRegion - 1][1]].equals("P1") && troopNum > Integer.parseInt(gMapInPlay[Main.regionArmPos[targetRegion - 1][0]][Main.regionArmPos[targetRegion - 1][1]])){
+            String newExit = mapArmyAdj(Integer.parseInt(gMapInPlay[Main.regionArmPos[exitRegion - 1][0]][Main.regionArmPos[exitRegion - 1][1]]) - troopNum);
+            gMapInPlay[Main.regionArmPos[exitRegion - 1][0]][Main.regionArmPos[exitRegion - 1][1]] = newExit; // takes troops of region they are being moved from
+            String newTarget = mapArmyAdj(troopNum - Integer.parseInt(gMapInPlay[Main.regionArmPos[targetRegion - 1][0]][Main.regionArmPos[targetRegion - 1][1]]));
+            gMapInPlay[Main.regionArmPos[targetRegion - 1][0]][Main.regionArmPos[targetRegion - 1][1]] = newTarget; // takes away teh number of troops at target region from the invading force
+            gMapInPlay[Main.regionOccPos[targetRegion - 1][0]][Main.regionOccPos[targetRegion - 1][1]] = ("P1");
         }
+        Main.printMap(game.gMapInPlay, 30, 200);
+    }
+
+
+    public static String mapArmyAdj(int newValue){ //used to adjust ary values below 10 like "4" into format "04"
+        String army = String.valueOf(newValue);
+        if (newValue < 10) {
+            army = "0" + army;
+        }
+        return (army);
     }
 
 
@@ -91,9 +104,12 @@ public class game {
         int troopNum = Main.getInt("how many troops would you like to move from the region", 0, Integer.parseInt(gMapInPlay[Main.regionArmPos[exitRegion - 1][0]][Main.regionArmPos[exitRegion - 1][1]])); //limit of current troop count of that region ensures there must be at least 1 troop left in the region
         int targetRegion = Main.getInt("what region would you like to move troops to?", 0, 50);
         if (gMapInPlay[Main.regionOccPos[exitRegion - 1][0]][Main.regionOccPos[exitRegion - 1][1]].equals("PL") && gMapInPlay[Main.regionOccPos[targetRegion - 1][0]][Main.regionOccPos[targetRegion - 1][1]].equals("PL")){
-            gMapInPlay[Main.regionArmPos[exitRegion - 1][0]][Main.regionArmPos[exitRegion - 1][1]] = String.valueOf(Integer.parseInt(gMapInPlay[Main.regionArmPos[exitRegion - 1][0]][Main.regionArmPos[exitRegion - 1][1]]) - troopNum); // takes troops of region they are being moved from
-            gMapInPlay[Main.regionArmPos[targetRegion - 1][0]][Main.regionArmPos[targetRegion - 1][1]] = String.valueOf(Integer.parseInt(gMapInPlay[Main.regionArmPos[targetRegion - 1][0]][Main.regionArmPos[targetRegion - 1][1]]) + troopNum); // adds troops taken off onto the region they are being moved to
+            String newExit = mapArmyAdj(Integer.parseInt(gMapInPlay[Main.regionArmPos[exitRegion - 1][0]][Main.regionArmPos[exitRegion - 1][1]]) - troopNum);
+            gMapInPlay[Main.regionArmPos[exitRegion - 1][0]][Main.regionArmPos[exitRegion - 1][1]] = newExit; // takes troops of region they are being moved from
+            String newTarget = mapArmyAdj(Integer.parseInt(gMapInPlay[Main.regionArmPos[targetRegion - 1][0]][Main.regionArmPos[targetRegion - 1][1]]) + troopNum);
+            gMapInPlay[Main.regionArmPos[targetRegion - 1][0]][Main.regionArmPos[targetRegion - 1][1]] = newTarget; // adds troops taken off onto the region they are being moved to
             }
+        Main.printMap(game.gMapInPlay, 30, 200);
        }
 
 
@@ -125,10 +141,12 @@ public class game {
             int targetRegion = Main.getInt("what region would you like to place some new troops in?",0, 50);
             if (gMapInPlay[Main.regionOccPos[targetRegion - 1][0]][Main.regionOccPos[targetRegion - 1][1]].equals("PL")) {
                 int troopNum = Main.getInt("how many troops would you like to place in this region?", 0, newTroops);
-                gMapInPlay[Main.regionArmPos[targetRegion - 1][0]][Main.regionArmPos[targetRegion - 1][1]] = String.valueOf(Integer.parseInt(gMapInPlay[Main.regionArmPos[targetRegion - 1][0]][Main.regionArmPos[targetRegion - 1][1]]) + troopNum); //adds troops to whatever is already there using the navigation arrays
+                String newTarget = mapArmyAdj(Integer.parseInt(gMapInPlay[Main.regionArmPos[targetRegion - 1][0]][Main.regionArmPos[targetRegion - 1][1]]) + troopNum);
+                gMapInPlay[Main.regionArmPos[targetRegion - 1][0]][Main.regionArmPos[targetRegion - 1][1]] = newTarget; //adds troops to whatever is already there using the navigation arrays
             }else {
                 System.out.println("you don't control this region");
             }
+            Main.printMap(game.gMapInPlay, 30, 200);
         }
     }
 
@@ -140,14 +158,14 @@ public class game {
 
     public static boolean checkRegionBorderValid(int exitRegion, int targetRegion, int borderNum, String attacker) { //checks for a valid attack target when invading
         String occupation = gMapInPlay[Main.regionOccPos[targetRegion - 1][0]][Main.regionOccPos[targetRegion - 1][1]];
-        boolean validity = false;
-        for (int i = 0; i < borderNum; i++) {
-            int current = Main.regionSharedBorders[exitRegion][i];
-            if (current == targetRegion && (occupation.equals("P1") || occupation.equals("P2") || occupation.equals("P3") || occupation.equals("P4") && !(occupation.equals(attacker)))) {
+        boolean validity =  false;
+        for (int i = 0; i < borderNum - 1; i++) {
+            int current = Main.regionSharedBorders[exitRegion - 1][i];
+            if (current == targetRegion && (occupation.equals("P1") || occupation.equals("P2") || occupation.equals("P3") || occupation.equals("P4") || occupation.equals("NC") && !(occupation.equals(attacker)))) {
                 validity = true;
             }
         }
-        if (validity = false){
+        if (validity == false){
             System.out.println("invalid attack target");
         }
         return (validity);

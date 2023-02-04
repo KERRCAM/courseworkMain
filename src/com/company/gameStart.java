@@ -80,6 +80,7 @@ public class gameStart {
         game.factionInfo[1][0] = p2Start;
         game.factionInfo[2][0] = p3Start;
         game.factionInfo[3][0] = p4Start;
+        Main.printMap(game.gMapInPlay, 30, 200);
     }
 
 
