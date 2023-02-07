@@ -103,21 +103,23 @@ public class game {
                 armyDiff.add(Integer.parseInt(gMapInPlay[Main.regionArmPos[validRangeExitRegions.get(i)][0]][Main.regionArmPos[validRangeExitRegions.get(i)][1]]) - Integer.parseInt(gMapInPlay[Main.regionArmPos[validRangeTargetRegions.get(i)][0]][Main.regionArmPos[validRangeTargetRegions.get(i)][1]]));
             }
         }
-        for (int i = 0; i < armyDiff.size(); i++) {
-            int lowestResistance = 0;
-            if (armyDiff.get(i) > lowestResistance){
-                lowestResistance = armyDiff.get(i);
-                target = i;
-            }if (armyDiff.get(i) == lowestResistance){
-                int ran = random.nextInt(2); //1 or 2
-                if (ran == 1){
+        if (armyDiff.size() > 0){
+            for (int i = 0; i < armyDiff.size(); i++) {
+                int lowestResistance = 0;
+                if (armyDiff.get(i) > lowestResistance){
+                    lowestResistance = armyDiff.get(i);
                     target = i;
+                }if (armyDiff.get(i) == lowestResistance){
+                    int ran = random.nextInt(2); //1 or 2
+                    if (ran == 1){
+                        target = i;
+                    }
                 }
             }
+            gMapInPlay[Main.regionArmPos[validExitRegions.get(target)][0]][Main.regionArmPos[validExitRegions.get(target)][1]] = String.valueOf(Integer.parseInt(gMapInPlay[Main.regionArmPos[validExitRegions.get(target)][0]][Main.regionArmPos[validExitRegions.get(target)][1]]) - Integer.parseInt(gMapInPlay[Main.regionArmPos[validTargetRegions.get(target)][0]][Main.regionArmPos[validTargetRegions.get(target)][1]]));
+            gMapInPlay[Main.regionArmPos[validTargetRegions.get(target)][0]][Main.regionArmPos[validTargetRegions.get(target)][1]] = String.valueOf(Integer.parseInt(gMapInPlay[Main.regionArmPos[validExitRegions.get(target)][0]][Main.regionArmPos[validExitRegions.get(target)][1]]) - 1);
+            gMapInPlay[Main.regionArmPos[validTargetRegions.get(target)][0]][Main.regionArmPos[validTargetRegions.get(target)][1]] = attacker;
         }
-        gMapInPlay[Main.regionArmPos[validExitRegions.get(target)][0]][Main.regionArmPos[validExitRegions.get(target)][1]] = String.valueOf(Integer.parseInt(gMapInPlay[Main.regionArmPos[validExitRegions.get(target)][0]][Main.regionArmPos[validExitRegions.get(target)][1]]) - Integer.parseInt(gMapInPlay[Main.regionArmPos[validTargetRegions.get(target)][0]][Main.regionArmPos[validTargetRegions.get(target)][1]]));
-        gMapInPlay[Main.regionArmPos[validTargetRegions.get(target)][0]][Main.regionArmPos[validTargetRegions.get(target)][1]] = String.valueOf(Integer.parseInt(gMapInPlay[Main.regionArmPos[validExitRegions.get(target)][0]][Main.regionArmPos[validExitRegions.get(target)][1]]) - 1);
-        gMapInPlay[Main.regionArmPos[validTargetRegions.get(target)][0]][Main.regionArmPos[validTargetRegions.get(target)][1]] = attacker;
     }
 
 
