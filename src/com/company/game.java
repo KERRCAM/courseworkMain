@@ -7,6 +7,8 @@ game info table (userid, time, efficiency, money, food, cap1, cap2, cap3, cap4)
 scores table  (userid, time, efficiency, combined)
 */
 
+import java.util.ArrayList;
+
 public class game {
     public static String gMapInPlay[][] = new String[30][200];
     public static boolean gameRunning = true;
@@ -60,6 +62,28 @@ public class game {
 
     public static void enemyTurns(){
         System.out.println("");
+    }
+
+
+    public static void enemyInvasion(String attacker){
+        ArrayList<Integer> occRegions = new ArrayList<>();
+        ArrayList<Integer> possibleTargetRegions = new ArrayList<>();
+        ArrayList<Integer> validTargetRegions = new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+            if (gMapInPlay[Main.regionOccPos[i][0]][Main.regionOccPos[i][1]].equals(attacker)){
+                occRegions.add(i);
+            }
+        }
+        for (int i = 0; i < occRegions.size(); i++) {
+            for (int j = 0; j < Main.regionBorderAmounts[occRegions.get(i)]; j++) {
+                if(!(gMapInPlay[Main.regionOccPos[Main.regionSharedBorders[occRegions.get(i)][j]][0]][Main.regionOccPos[Main.regionSharedBorders[occRegions.get(i)][j]][1]].equals(attacker))){
+                    if (!(possibleTargetRegions.contains(Main.regionSharedBorders[occRegions.get(i)][j]))){
+                        validTargetRegions.add(Main.regionSharedBorders[occRegions.get(i)][j]);
+                    }
+                }
+            }
+        }
+
     }
 
 
