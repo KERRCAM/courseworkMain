@@ -8,6 +8,7 @@ scores table  (userid, time, efficiency, combined)
 */
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class game {
     public static String gMapInPlay[][] = new String[30][200];
@@ -61,11 +62,12 @@ public class game {
 
 
     public static void enemyTurns(){
-        System.out.println("");
-        //do passive gain for a region then invasion for region
-        //needs checks for if player is actually still alive before calling their methods
-        //simple run of occ counter in game start and 0 = out
-        //all 0 then player has won
+        enemyPassiveGain("P2");
+        enemyInvasion("P2");
+        enemyPassiveGain("P3");
+        enemyInvasion("P3");
+        enemyPassiveGain("P4");
+        enemyInvasion("P4");
     }
 
 
@@ -73,7 +75,12 @@ public class game {
         ArrayList<Integer> occRegions = new ArrayList<>(); //all regions attacker controls
         ArrayList<Integer> possibleTargetRegions = new ArrayList<>(); //all regions that border an occupied region
         ArrayList<Integer> validRangeTargetRegions = new ArrayList<>(); //all unique enemy regions that border an occupied region
+        ArrayList<Integer> validRangeExitRegions = new ArrayList<>(); //corresponding exit region for the target region
         ArrayList<Integer> validTargetRegions = new ArrayList<>(); //all enemy regions bordering occupied region that can be invaded i.e. the occupied region has more troops than the target region
+        ArrayList<Integer> validExitRegions = new ArrayList<>(); //corresponding exit region for the target region
+        ArrayList<Integer> armyDiff = new ArrayList<>(); //the difference between the troop numbers in the target and exit regions
+        int target = 0; //index of target region
+        Random random = new Random();
         for (int i = 0; i < 50; i++) {
             if (gMapInPlay[Main.regionOccPos[i][0]][Main.regionOccPos[i][1]].equals(attacker)){
                 occRegions.add(i);
@@ -84,14 +91,38 @@ public class game {
                 if(!(gMapInPlay[Main.regionOccPos[Main.regionSharedBorders[occRegions.get(i)][j]][0]][Main.regionOccPos[Main.regionSharedBorders[occRegions.get(i)][j]][1]].equals(attacker))){
                     if (!(possibleTargetRegions.contains(Main.regionSharedBorders[occRegions.get(i)][j]))){
                         validRangeTargetRegions.add(Main.regionSharedBorders[occRegions.get(i)][j]);
+                        validRangeExitRegions.add(occRegions.get(i));
                     }
                 }
             }
         }
-        //loop for last array list fill
-        //calc resistance of each option
-        //pick random lowest resistance option or pick random from common lowest
-        //perform the invasion
+        for (int i = 0; i < validRangeTargetRegions.size(); i++) {
+            if (Integer.parseInt(gMapInPlay[Main.regionArmPos[validRangeExitRegions.get(i)][0]][Main.regionArmPos[validRangeExitRegions.get(i)][1]]) - Integer.parseInt(gMapInPlay[Main.regionArmPos[validRangeTargetRegions.get(i)][0]][Main.regionArmPos[validRangeTargetRegions.get(i)][1]]) > 0){
+                validTargetRegions.add(validRangeTargetRegions.get(i));
+                validExitRegions.add(validRangeExitRegions.get(i));
+                armyDiff.add(Integer.parseInt(gMapInPlay[Main.regionArmPos[validRangeExitRegions.get(i)][0]][Main.regionArmPos[validRangeExitRegions.get(i)][1]]) - Integer.parseInt(gMapInPlay[Main.regionArmPos[validRangeTargetRegions.get(i)][0]][Main.regionArmPos[validRangeTargetRegions.get(i)][1]]));
+            }
+        }
+        for (int i = 0; i < armyDiff.size(); i++) {
+            int lowestResistance = 0;
+            if (armyDiff.get(i) > lowestResistance){
+                lowestResistance = armyDiff.get(i);
+                target = i;
+            }if (armyDiff.get(i) == lowestResistance){
+                int ran = random.nextInt(2); //1 or 2
+                if (ran == 1){
+                    target = i;
+                }
+            }
+        }
+        gMapInPlay[Main.regionArmPos[validExitRegions.get(target)][0]][Main.regionArmPos[validExitRegions.get(target)][1]] = String.valueOf(Integer.parseInt(gMapInPlay[Main.regionArmPos[validExitRegions.get(target)][0]][Main.regionArmPos[validExitRegions.get(target)][1]]) - Integer.parseInt(gMapInPlay[Main.regionArmPos[validTargetRegions.get(target)][0]][Main.regionArmPos[validTargetRegions.get(target)][1]]));
+        gMapInPlay[Main.regionArmPos[validTargetRegions.get(target)][0]][Main.regionArmPos[validTargetRegions.get(target)][1]] = String.valueOf(Integer.parseInt(gMapInPlay[Main.regionArmPos[validExitRegions.get(target)][0]][Main.regionArmPos[validExitRegions.get(target)][1]]) - 1);
+        gMapInPlay[Main.regionArmPos[validTargetRegions.get(target)][0]][Main.regionArmPos[validTargetRegions.get(target)][1]] = attacker;
+    }
+
+
+    public static void enemyPassiveGain(String playerNum){
+
     }
 
 
@@ -162,7 +193,7 @@ public class game {
 
 
     public static void specialAttacks(){
-        System.out.println("");
+
     }
 
 
@@ -184,7 +215,7 @@ public class game {
 
 
     public static void passiveGain(){ //gets the troops food and money gained passively from controlled regions 1 troop 10 food money, x3 for holding a city farm mine
-        System.out.println("");
+
     }
 
 
