@@ -40,7 +40,7 @@ public class game {
         passiveGain(); // start off each turn begins with placing the troops passively gained and also adding the money and food gained
         boolean exit = false;
         while (exit == false) {
-            String option = Main.getString("what would you like to (enter number of action): \n (1)-invade region-  \n (2)-move troops- \n (3)-make troops- \n (4)-special attacks- \n (5)-save and exit-");
+            String option = Main.getString("what would you like to (enter number of action): \n (1)-invade region-  \n (2)-move troops- \n (3)-make troops- \n (4)-special attacks- \n (5)-end turn- \n (6)-save and exit-");
             if (option.equals("1")) {
                 invadeRegion();
             }
@@ -54,6 +54,9 @@ public class game {
                 specialAttacks();
             }
             if (option.equals("5")) {
+                exit = true;
+            }
+            if (option.equals("6")) {
                 saveGame();
                 exit = true;
             }
@@ -68,6 +71,7 @@ public class game {
         enemyInvasion("P3");
         enemyPassiveGain("P4");
         enemyInvasion("P4");
+        Main.printMap(game.gMapInPlay, 30, 200);
     }
 
 
@@ -81,7 +85,7 @@ public class game {
         ArrayList<Integer> armyDiff = new ArrayList<>(); //the difference between the troop numbers in the target and exit regions
         int target = 0; //index of target region
         Random random = new Random();
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 49; i++) {
             if (gMapInPlay[Main.regionOccPos[i][0]][Main.regionOccPos[i][1]].equals(attacker)){
                 occRegions.add(i);
             }
