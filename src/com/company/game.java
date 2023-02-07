@@ -102,7 +102,7 @@ public class game {
         }
         for (int i = 0; i < validRangeTargetRegions.size(); i++) {
             if (Integer.parseInt(gMapInPlay[Main.regionArmPos[validRangeExitRegions.get(i)][0]][Main.regionArmPos[validRangeExitRegions.get(i)][1]]) - Integer.parseInt(gMapInPlay[Main.regionArmPos[validRangeTargetRegions.get(i)][0]][Main.regionArmPos[validRangeTargetRegions.get(i)][1]]) > 0){
-                validTargetRegions.add(validRangeTargetRegions.get(i));
+                validTargetRegions.add((validRangeTargetRegions.get(i)) - 1);
                 validExitRegions.add(validRangeExitRegions.get(i));
                 armyDiff.add(Integer.parseInt(gMapInPlay[Main.regionArmPos[validRangeExitRegions.get(i)][0]][Main.regionArmPos[validRangeExitRegions.get(i)][1]]) - Integer.parseInt(gMapInPlay[Main.regionArmPos[validRangeTargetRegions.get(i)][0]][Main.regionArmPos[validRangeTargetRegions.get(i)][1]]));
             }
@@ -120,10 +120,11 @@ public class game {
                     }
                 }
             }
-            gMapInPlay[Main.regionArmPos[validExitRegions.get(target)][0]][Main.regionArmPos[validExitRegions.get(target)][1]] = "01";
-            String newTarget = mapArmyAdj(Integer.parseInt(gMapInPlay[Main.regionArmPos[validExitRegions.get(target)][0]][Main.regionArmPos[validExitRegions.get(target)][1]]) - Integer.valueOf(gMapInPlay[Main.regionArmPos[validTargetRegions.get(target)][0]][Main.regionArmPos[validTargetRegions.get(target)][1]]));
+
+            String newTarget = mapArmyAdj((Integer.parseInt(gMapInPlay[Main.regionArmPos[validExitRegions.get(target)][0]][Main.regionArmPos[validExitRegions.get(target)][1]]) - 1) - Integer.valueOf(gMapInPlay[Main.regionArmPos[validTargetRegions.get(target)][0]][Main.regionArmPos[validTargetRegions.get(target)][1]]));
             gMapInPlay[Main.regionArmPos[validTargetRegions.get(target)][0]][Main.regionArmPos[validTargetRegions.get(target)][1]] = newTarget;
             gMapInPlay[Main.regionOccPos[validTargetRegions.get(target)][0]][Main.regionOccPos[validTargetRegions.get(target)][1]] = attacker;
+            gMapInPlay[Main.regionArmPos[validExitRegions.get(target)][0]][Main.regionArmPos[validExitRegions.get(target)][1]] = "01";
         }
     }
 
