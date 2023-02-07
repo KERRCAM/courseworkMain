@@ -62,6 +62,10 @@ public class game {
 
     public static void enemyTurns(){
         System.out.println("");
+        //do passive gain for a region then invasion for region
+        //needs checks for if player is actually still alive before calling their methods
+        //simple run of occ counter in game start and 0 = out
+        //all 0 then player has won
     }
 
 
@@ -179,7 +183,7 @@ public class game {
     }
 
 
-    public static void passiveGain(){ //gets the troops food and money gained passively from controlled regions
+    public static void passiveGain(){ //gets the troops food and money gained passively from controlled regions 1 troop 10 food money, x3 for holding a city farm mine
         System.out.println("");
     }
 
