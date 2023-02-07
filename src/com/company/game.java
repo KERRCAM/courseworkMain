@@ -84,13 +84,13 @@ public class game {
         ArrayList<Integer> validExitRegions = new ArrayList<>(); //corresponding exit region for the target region
         ArrayList<Integer> armyDiff = new ArrayList<>(); //the difference between the troop numbers in the target and exit regions
         int target = 0; //index of target region
-        Random random = new Random();
+        Random random = new Random(); //fills all regions occupied by the attacker
         for (int i = 0; i < 49; i++) {
             if (gMapInPlay[Main.regionOccPos[i][0]][Main.regionOccPos[i][1]].equals(attacker)){
                 occRegions.add(i);
             }
         }
-        for (int i = 0; i < occRegions.size(); i++) {
+        for (int i = 0; i < occRegions.size(); i++) { //fills all the regions that border the occupied regions
             for (int j = 0; j < Main.regionBorderAmounts[occRegions.get(i)]; j++) {
                 if(!(gMapInPlay[Main.regionOccPos[Main.regionSharedBorders[occRegions.get(i)][j]][0]][Main.regionOccPos[Main.regionSharedBorders[occRegions.get(i)][j]][1]].equals(attacker))){
                     if (!(possibleTargetRegions.contains(Main.regionSharedBorders[occRegions.get(i)][j]))){
@@ -100,15 +100,15 @@ public class game {
                 }
             }
         }
-        for (int i = 0; i < validRangeTargetRegions.size(); i++) {
+        for (int i = 0; i < validRangeTargetRegions.size(); i++) { //fills all the regions that border the attacker and can be invaded
             if (Integer.parseInt(gMapInPlay[Main.regionArmPos[validRangeExitRegions.get(i)][0]][Main.regionArmPos[validRangeExitRegions.get(i)][1]]) - Integer.parseInt(gMapInPlay[Main.regionArmPos[validRangeTargetRegions.get(i)][0]][Main.regionArmPos[validRangeTargetRegions.get(i)][1]]) > 0){
                 validTargetRegions.add((validRangeTargetRegions.get(i)) - 1);
                 validExitRegions.add(validRangeExitRegions.get(i));
                 armyDiff.add(Integer.parseInt(gMapInPlay[Main.regionArmPos[validRangeExitRegions.get(i)][0]][Main.regionArmPos[validRangeExitRegions.get(i)][1]]) - Integer.parseInt(gMapInPlay[Main.regionArmPos[validRangeTargetRegions.get(i)][0]][Main.regionArmPos[validRangeTargetRegions.get(i)][1]]));
             }
         }
-        if (armyDiff.size() > 0){
-            for (int i = 0; i < armyDiff.size(); i++) {
+        if (armyDiff.size() > 0){ //only attempts to perform an invasion if there has been at least 1 valid target found
+            for (int i = 0; i < armyDiff.size(); i++) { //fills the resistance values for each possible attack
                 int lowestResistance = 0;
                 if (armyDiff.get(i) > lowestResistance){
                     lowestResistance = armyDiff.get(i);
@@ -120,7 +120,7 @@ public class game {
                     }
                 }
             }
-
+            //statements for performing the actual invasions once all checks are done and target is picked
             String newTarget = mapArmyAdj((Integer.parseInt(gMapInPlay[Main.regionArmPos[validExitRegions.get(target)][0]][Main.regionArmPos[validExitRegions.get(target)][1]]) - 1) - Integer.valueOf(gMapInPlay[Main.regionArmPos[validTargetRegions.get(target)][0]][Main.regionArmPos[validTargetRegions.get(target)][1]]));
             gMapInPlay[Main.regionArmPos[validTargetRegions.get(target)][0]][Main.regionArmPos[validTargetRegions.get(target)][1]] = newTarget;
             gMapInPlay[Main.regionOccPos[validTargetRegions.get(target)][0]][Main.regionOccPos[validTargetRegions.get(target)][1]] = attacker;
