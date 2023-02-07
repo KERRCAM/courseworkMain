@@ -66,9 +66,10 @@ public class game {
 
 
     public static void enemyInvasion(String attacker){
-        ArrayList<Integer> occRegions = new ArrayList<>();
-        ArrayList<Integer> possibleTargetRegions = new ArrayList<>();
-        ArrayList<Integer> validTargetRegions = new ArrayList<>();
+        ArrayList<Integer> occRegions = new ArrayList<>(); //all regions attacker controls
+        ArrayList<Integer> possibleTargetRegions = new ArrayList<>(); //all regions that border an occupied region
+        ArrayList<Integer> validRangeTargetRegions = new ArrayList<>(); //all unique enemy regions that border an occupied region
+        ArrayList<Integer> validTargetRegions = new ArrayList<>(); //all enemy regions bordering occupied region that can be invaded i.e. the occupied region has more troops than the target region
         for (int i = 0; i < 50; i++) {
             if (gMapInPlay[Main.regionOccPos[i][0]][Main.regionOccPos[i][1]].equals(attacker)){
                 occRegions.add(i);
@@ -78,12 +79,15 @@ public class game {
             for (int j = 0; j < Main.regionBorderAmounts[occRegions.get(i)]; j++) {
                 if(!(gMapInPlay[Main.regionOccPos[Main.regionSharedBorders[occRegions.get(i)][j]][0]][Main.regionOccPos[Main.regionSharedBorders[occRegions.get(i)][j]][1]].equals(attacker))){
                     if (!(possibleTargetRegions.contains(Main.regionSharedBorders[occRegions.get(i)][j]))){
-                        validTargetRegions.add(Main.regionSharedBorders[occRegions.get(i)][j]);
+                        validRangeTargetRegions.add(Main.regionSharedBorders[occRegions.get(i)][j]);
                     }
                 }
             }
         }
-
+        //loop for last array list fill
+        //calc resistance of each option
+        //pick random lowest resistance option or pick random from common lowest
+        //perform the invasion
     }
 
 
