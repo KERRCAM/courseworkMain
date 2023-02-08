@@ -65,12 +65,19 @@ public class game {
 
 
     public static void enemyTurns(){
-        enemyPassiveGain("P2");
-        enemyInvasion("P2");
-        enemyPassiveGain("P3");
-        enemyInvasion("P3");
-        enemyPassiveGain("P4");
-        enemyInvasion("P4");
+        gameStart.regionOccCounter();
+        if (factionInfo[1][1] > 0){
+            enemyPassiveGain("P2");
+            enemyInvasion("P2");
+        }
+        if (factionInfo[2][1] > 0){
+            enemyPassiveGain("P3");
+            enemyInvasion("P3");
+        }
+        if (factionInfo[3][1] > 0){
+            enemyPassiveGain("P4");
+            enemyInvasion("P4");
+        }
         Main.printMap(game.gMapInPlay, 30, 200);
     }
 

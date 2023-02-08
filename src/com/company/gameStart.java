@@ -35,16 +35,16 @@ public class gameStart {
         for (int i = 0; i < 49; i++) {
             String occupation = game.gMapInPlay[Main.regionOccPos[i][0]][Main.regionOccPos[i][1]];
             if (occupation.equals("P1")) {
-                game.factionInfo[0][0] = game.factionInfo[0][0] + 1;
+                game.factionInfo[0][1] = game.factionInfo[0][1] + 1;
             }
             if (occupation.equals("P2")) {
-                game.factionInfo[1][0] = game.factionInfo[1][0] + 1;
+                game.factionInfo[1][1] = game.factionInfo[1][1] + 1;
             }
             if (occupation.equals("P3")) {
-                game.factionInfo[2][0] = game.factionInfo[2][0] + 1;
+                game.factionInfo[2][1] = game.factionInfo[2][1] + 1;
             }
             if (occupation.equals("P4")) {
-                game.factionInfo[3][0] = game.factionInfo[3][0] + 1;
+                game.factionInfo[3][1] = game.factionInfo[3][1] + 1;
             }
             /*
             if (occupation.equals("NC")) {
