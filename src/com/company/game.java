@@ -130,7 +130,19 @@ public class game {
 
 
     public static void enemyPassiveGain(String playerNum){
-
+        String newTroopNum = "";
+        for (int i = 0; i < 49; i++) {
+            String occupation = game.gMapInPlay[Main.regionOccPos[i][0]][Main.regionOccPos[i][1]];
+            if (occupation.equals(playerNum)) {
+                if (Main.regionExtraInfo[i][2] == 1) {
+                    newTroopNum = mapArmyAdj(Integer.parseInt(gMapInPlay[Main.regionArmPos[i][0]][Main.regionArmPos[i][1]]) + 3);
+                    gMapInPlay[Main.regionArmPos[i][0]][Main.regionArmPos[i][1]] = newTroopNum; //adds 3 troops to each controlled region containing a city
+                } else {
+                    newTroopNum = mapArmyAdj(Integer.parseInt(gMapInPlay[Main.regionArmPos[i][0]][Main.regionArmPos[i][1]]) + 1);
+                    gMapInPlay[Main.regionArmPos[i][0]][Main.regionArmPos[i][1]] = newTroopNum; //adds 1 troop to each controlled region
+                }
+            }
+        }
     }
 
 
