@@ -223,7 +223,28 @@ public class game {
 
 
     public static void passiveGain(){ //gets the troops food and money gained passively from controlled regions 1 troop 10 food money, x3 for holding a city farm mine
-
+        int newTroops = 0;
+        for (int i = 0; i < 49; i++) {
+            String occupation = game.gMapInPlay[Main.regionOccPos[i][0]][Main.regionOccPos[i][1]];
+            if (occupation.equals("P1")) {
+                if (Main.regionExtraInfo[i][2] == 1){
+                    newTroops = newTroops + 3; //adds 3 troops for each controlled region containing a city
+                }else{
+                    newTroops = newTroops + 1; //adds 1 troop for each controlled region
+                }
+                if (Main.regionExtraInfo[i][1] == 1){
+                    gameInfo[3] = gameInfo[3] + 30; //adds 30 food for each controlled region containing a farm
+                }else{
+                    gameInfo[3] = gameInfo[3] + 10; //adds 10 food for each controlled region
+                }
+                if (Main.regionExtraInfo[i][4] == 1){
+                    gameInfo[2] = gameInfo[3] + 30; //adds 30 money for each controlled region containing a mine
+                }else{
+                    gameInfo[2] = gameInfo[3] + 10; //adds 10 money for each controlled region
+                }
+            }
+        }
+        troopPlace(newTroops);
     }
 
 
