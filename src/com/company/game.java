@@ -1,4 +1,4 @@
-package com.company;
+package com.company; //bugs to work out: region 49 invasions for player and enemy - map army adj for 10 is still adding 0?
 
 /*
 database
@@ -229,10 +229,11 @@ public class game {
         while (newTroops > 0) {
             System.out.println("you have " + newTroops + " new troops left to place");
             int targetRegion = Main.getInt("what region would you like to place some new troops in?",0, 50);
-            if (gMapInPlay[Main.regionOccPos[targetRegion - 1][0]][Main.regionOccPos[targetRegion - 1][1]].equals("PL")) {
+            if (gMapInPlay[Main.regionOccPos[targetRegion - 1][0]][Main.regionOccPos[targetRegion - 1][1]].equals("P1")) {
                 int troopNum = Main.getInt("how many troops would you like to place in this region?", 0, newTroops);
                 String newTarget = mapArmyAdj(Integer.parseInt(gMapInPlay[Main.regionArmPos[targetRegion - 1][0]][Main.regionArmPos[targetRegion - 1][1]]) + troopNum);
                 gMapInPlay[Main.regionArmPos[targetRegion - 1][0]][Main.regionArmPos[targetRegion - 1][1]] = newTarget; //adds troops to whatever is already there using the navigation arrays
+                newTroops = newTroops - troopNum;
             }else {
                 System.out.println("you don't control this region");
             }
