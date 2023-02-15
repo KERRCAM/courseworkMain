@@ -99,17 +99,20 @@ public class game {
         }
         for (int i = 0; i < occRegions.size(); i++) { //fills all the regions that border the occupied regions
             for (int j = 0; j < Main.regionBorderAmounts[occRegions.get(i)]; j++) {
-                if(!(gMapInPlay[Main.regionOccPos[Main.regionSharedBorders[occRegions.get(i)][j]][0]][Main.regionOccPos[Main.regionSharedBorders[occRegions.get(i)][j]][1]].equals(attacker))){
+                if(!(gMapInPlay[Main.regionOccPos[Main.regionSharedBorders[occRegions.get(i)][j] - 1][0]][Main.regionOccPos[Main.regionSharedBorders[occRegions.get(i)][j] - 1][1]].equals(attacker))){
                     if (!(possibleTargetRegions.contains(Main.regionSharedBorders[occRegions.get(i)][j]))){
-                        validRangeTargetRegions.add(Main.regionSharedBorders[occRegions.get(i)][j]);
+                        validRangeTargetRegions.add(Main.regionSharedBorders[occRegions.get(i)][j] - 1); //index adjust
+                        //System.out.println(Main.regionSharedBorders[occRegions.get(i)][j]);
+                        //System.out.println("");
                         validRangeExitRegions.add(occRegions.get(i));
+                        //System.out.println(occRegions.get(i));
                     }
                 }
             }
         }
         for (int i = 0; i < validRangeTargetRegions.size(); i++) { //fills all the regions that border the attacker and can be invaded
-            if (Integer.parseInt(gMapInPlay[Main.regionArmPos[validRangeExitRegions.get(i)][0]][Main.regionArmPos[validRangeExitRegions.get(i)][1]]) - Integer.parseInt(gMapInPlay[Main.regionArmPos[validRangeTargetRegions.get(i)][0]][Main.regionArmPos[validRangeTargetRegions.get(i)][1]]) > 0){
-                validTargetRegions.add((validRangeTargetRegions.get(i)) - 1);
+            if (Integer.parseInt(gMapInPlay[Main.regionArmPos[validRangeExitRegions.get(i)][0]][Main.regionArmPos[validRangeExitRegions.get(i)][1]]) - (Integer.parseInt(gMapInPlay[Main.regionArmPos[validRangeTargetRegions.get(i)][0]][Main.regionArmPos[validRangeTargetRegions.get(i)][1]]) + 1) > 0){
+                validTargetRegions.add((validRangeTargetRegions.get(i)));
                 validExitRegions.add(validRangeExitRegions.get(i));
                 armyDiff.add(Integer.parseInt(gMapInPlay[Main.regionArmPos[validRangeExitRegions.get(i)][0]][Main.regionArmPos[validRangeExitRegions.get(i)][1]]) - Integer.parseInt(gMapInPlay[Main.regionArmPos[validRangeTargetRegions.get(i)][0]][Main.regionArmPos[validRangeTargetRegions.get(i)][1]]));
             }
@@ -269,9 +272,9 @@ public class game {
 
 
     public static boolean checkRegionBorderValid(int exitRegion, int targetRegion, int borderNum, String attacker) { //checks for a valid attack target when invading
-        String occupation = gMapInPlay[Main.regionOccPos[targetRegion - 1][0]][Main.regionOccPos[targetRegion - 1][1]];
+        String occupation = gMapInPlay[Main.regionOccPos[targetRegion - 1][0]][Main.regionOccPos[targetRegion - 1][1]]; //might need to add -1 back to target region
         boolean validity =  false;
-        for (int i = 0; i < borderNum - 1; i++) {
+        for (int i = 0; i < borderNum; i++) {
             int current = Main.regionSharedBorders[exitRegion - 1][i];
             if (current == targetRegion && (occupation.equals("P1") || occupation.equals("P2") || occupation.equals("P3") || occupation.equals("P4") || occupation.equals("NC") && !(occupation.equals(attacker)))) {
                 validity = true;
