@@ -24,7 +24,7 @@ public class gameStart {
         if (save == true){
             regionOccCounter(); //counts number of regions controlled by each faction and adjusts game faction information array
             game.initialTime = System.currentTimeMillis();
-            game.gameLoop(); //uncomment when game loop is rdy
+            game.gameLoop();
         }
     }
 
@@ -74,8 +74,7 @@ public class gameStart {
         int p4Start = 0;
         Main.printMap(game.gMapInPlay, 30, 200);
         int startRegion = Main.getInt("what region would like to start in?", 0, 50); //gets the users input for their stating region
-        //p2Start = uniqueRandomNum(startRegion, p2Start, p3Start, p4Start); //randomly selects unique start region for the 3 enemies
-        p2Start = 48;
+        p2Start = uniqueRandomNum(startRegion, p2Start, p3Start, p4Start); //randomly selects unique start region for the 3 enemies
         p3Start = uniqueRandomNum(startRegion, p2Start, p3Start, p4Start);
         p4Start = uniqueRandomNum(startRegion, p2Start, p3Start, p4Start);
         game.gMapInPlay[Main.regionOccPos[startRegion - 1][0]][Main.regionOccPos[startRegion - 1][1]] = "P1"; //changes the map to have the occupation of the capitols
