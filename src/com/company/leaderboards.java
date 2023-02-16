@@ -174,6 +174,7 @@ public class leaderboards {
         String action = Main.getString("How wouold you like to see the leader board arranged? (enter number of action): \n (1)-top scores- \n (2)-your place on the leaderboard-");
         if (action.equals("2")){
             target = loginFunctions.userIDfinder();
+            Main.fileContentsUsers.clear();
         }
         return (target);
     }

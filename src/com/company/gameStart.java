@@ -12,6 +12,7 @@ public class gameStart {
         game.gameDone = false;
         game.gameRunning = true;
         int userID = loginFunctions.userIDfinder();
+        Main.fileContentsUsers.clear();
         String saveName = "gameSave" + String.valueOf(userID) + ".txt";
         System.out.println(saveName);
         try {
@@ -24,6 +25,7 @@ public class gameStart {
         if (save == true){
             regionOccCounter(); //counts number of regions controlled by each faction and adjusts game faction information array
             game.initialTime = System.currentTimeMillis();
+            Main.printMap(game.gMapInPlay, 30, 200);
             game.gameLoop();
         }
     }

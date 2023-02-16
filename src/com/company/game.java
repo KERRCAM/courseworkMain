@@ -55,7 +55,8 @@ public class game {
             double combinedScoreDecimal = ((gameInfo[2] + gameInfo[3]) / (gameInfo[1] + (0.1 * gameInfo[0]))) * 1000; //formula for generating an overall score based on money food time and efficiency, money and food are equally weighted and efficiency is weighted more than time (for comparative scores)
             int combinedScore = (int)Math.rint(combinedScoreDecimal);
             String DatabaseLocation = System.getProperty("user.dir") + "\\courseworkDatabase.accdb";
-            int userID = loginFunctions.userIDfinder();
+            int userID = loginFunctions.userIDfinder() + 1;
+            Main.fileContentsUsers.clear();
             try {
                 Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + DatabaseLocation, "", "");
                 Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -194,8 +195,9 @@ public class game {
 
 
     public static void saveGame(){
-        int userID = loginFunctions.userIDfinder();
-        String saveName = "gameSave" + String.valueOf(userID) + ".txt"; //just overwrites save if already exists
+        int userID = loginFunctions.userIDfinder() + 1;
+        Main.fileContentsUsers.clear();
+        String saveName = "gameSave" + String.valueOf(userID - 1) + ".txt"; //just overwrites save if already exists
         finalTime = System.currentTimeMillis();
         float sessionTime = ((finalTime - initialTime) / 1000) + game.gameInfo[0];
         int sessionTimeInt = (int)sessionTime;
@@ -210,6 +212,7 @@ public class game {
         } catch (Exception e) {
             System.out.println("Error in the SQL class: " + e);
         }
+        Main.mapToFile(saveName, gMapInPlay, 30, 200);
     }
 
 
@@ -270,6 +273,7 @@ public class game {
 
     public static void specialAttacks(){
         System.out.println(loginFunctions.userIDfinder());
+        Main.fileContentsUsers.clear();
     }
 
 

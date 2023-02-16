@@ -134,8 +134,6 @@ public class Main {
     }
 
 
-
-
     public static String getString(String prompt) { //general method for getting a string anywhere in the program
         Scanner input = new Scanner(System.in);
         String strInput = "";

@@ -30,11 +30,11 @@ public class loginFunctions {
     }
 
 
-    public static int userIDfinder(){ //gets the user ID of the current logged in user so it can be used to make or find game saves
+    public static int userIDfinder(){ //gets the user ID of the current logged in user so it can be used to make or find game saves //BIG ISSUE
         fileToList("users.txt");
         int userIndexPos = 0;
         String username = Main.userLoggedIn;
-        for (int i = 0; i < Main.fileContentsUsers.size(); i++) {
+        for (int i = 0; i < (Main.fileContentsUsers.size()); i++) {
             if (Main.fileContentsUsers.get(i).getUsername().equals(username)) {
                 userIndexPos = i;
             }
@@ -67,6 +67,7 @@ public class loginFunctions {
         if (logInStatus > 0) {
             Main.userLoggedIn = username;
         }
+        Main.fileContentsUsers.clear();
         return(logInStatus);
     }
 
