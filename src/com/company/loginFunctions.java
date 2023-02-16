@@ -30,7 +30,7 @@ public class loginFunctions {
     }
 
 
-    public static int userIDfinder(){ //gets the user ID of the current logged in user so it can be used to make or find game saves //BIG ISSUE
+    public static int userIDfinder(){ //gets the user ID of the current logged in user so it can be used to make or find game saves
         fileToList("users.txt");
         int userIndexPos = 0;
         String username = Main.userLoggedIn;
