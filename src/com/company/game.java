@@ -23,6 +23,7 @@ public class game {
     public static long finalTime;
     public static boolean gameDone = false;
 
+
     public static void gameLoop(String startType){
         if (startType == "load") {
             gameStart.loadGame();
@@ -37,6 +38,32 @@ public class game {
         while (gameRunning == true) { //repeats player turn and enemy turns until player either saves and exits, wins or loses
             playerTurn();
             enemyTurns();
+        }
+        if (gameDone == true){
+            endGame();
+        }
+    }
+
+
+    public static void endGame(){
+        if (factionInfo[0][1] == 0){
+            System.out.println("ALL FRIENDLY REGIONS HAVE BEEN INVADED, YOU LOSE"); // if game was lost
+        }
+        if (factionInfo[0][1] == 49) {
+            System.out.println("ALL REGIONS UNDER FRIENDLY CONTROL, YOU WIN"); // if game was won
+            System.out.println("you won in " + gameInfo[0] + " seconds, " + gameInfo[1] + " moves and with " + gameInfo[2] + " money and " + gameInfo[3] + " food left");
+            double combinedScoreDecimal = ((gameInfo[2] + gameInfo[3]) / (gameInfo[1] + (0.1 * gameInfo[0]))) * 1000; //formula for generating an overall score based on money food time and efficiency, money and food are equally weighted and efficiency is weighted more than time (for comparative scores)
+            int combinedScore = (int)Math.rint(combinedScoreDecimal);
+            String DatabaseLocation = System.getProperty("user.dir") + "\\courseworkDatabase.accdb";
+            int userID = loginFunctions.userIDfinder();
+            try {
+                Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + DatabaseLocation, "", "");
+                Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                stmt.executeUpdate("UPDATE scores set time = '"+gameInfo[0]+"', efficiency = '"+gameInfo[1]+"', combined = '"+combinedScore+"' WHERE ID = '"+userID+"'"); //sql update statment for scores
+                con.close();
+            } catch (Exception e) {
+                System.out.println("Error in the SQL class: " + e);
+            }
         }
     }
 
@@ -85,7 +112,7 @@ public class game {
             enemyInvasion("P4");
         }
         Main.printMap(game.gMapInPlay, 30, 200);
-        if (factionInfo[0][1] == 49){
+        if (factionInfo[0][1] == 49 || factionInfo[0][1] == 0){
             gameRunning = false;
             gameDone = true;
         }
@@ -178,7 +205,6 @@ public class game {
         try {
             Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + DatabaseLocation, "", "");
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            // also needs to be insert when user is made and then update here
             stmt.executeUpdate("UPDATE gameInfo set time = '"+gameInfo[0]+"', efficiency = '"+gameInfo[1]+"', money = '"+gameInfo[2]+"', food = '"+gameInfo[3]+"' WHERE ID = '"+userID+"'");
             con.close();
         } catch (Exception e) {
