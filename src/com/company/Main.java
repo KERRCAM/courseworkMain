@@ -186,8 +186,10 @@ public class Main {
                 game.gameLoop("new");
             }
             if (option.equals("3")) {
+
             }
             if (option.equals("4")) {
+
             }
             if (option.equals("5")) {
                 exit = true;
