@@ -100,7 +100,7 @@ public class leaderboards {
         if (target == 0){
             for (int i = 0; i < 10; i++) {
                 try{
-                    System.out.println(i + ": " + combinedScores.get(i));
+                    System.out.println((i + 1) + ": " + combinedScores.get(i));
                 } catch (Exception e){
                     System.out.println(i + ": ");
                 }
@@ -109,7 +109,7 @@ public class leaderboards {
             for (int i = target - 5; i < target + 5; i++) {
                 if (i > 0){
                     try{
-                        System.out.println(i + ": " + combinedScores.get(i));
+                        System.out.println(i + ": " + combinedScores.get(i - 1));
                     } catch (Exception e){
                         System.out.println(i + ": ");
                     }
@@ -125,7 +125,7 @@ public class leaderboards {
         if (target == 0){
             for (int i = 0; i < 10; i++) {
                 try{
-                    System.out.println(i + ": " + timeScores.get(i));
+                    System.out.println((i + 1) + ": " + timeScores.get(i));
                 } catch (Exception e){
                     System.out.println(i + ": ");
                 }
@@ -134,7 +134,7 @@ public class leaderboards {
             for (int i = target - 5; i < target + 5; i++) {
                 if (i > 0){
                     try{
-                        System.out.println(i + ": " + timeScores.get(i));
+                        System.out.println(i + ": " + timeScores.get(i - 1));
                     } catch (Exception e){
                         System.out.println(i + ": ");
                     }
@@ -150,7 +150,7 @@ public class leaderboards {
         if (target == 0){
             for (int i = 0; i < 10; i++) {
                 try{
-                    System.out.println(i + ": " + efficiencyScores.get(i));
+                    System.out.println((i + 1) + ": " + efficiencyScores.get(i));
                 } catch (Exception e){
                     System.out.println(i + ": ");
                 }
@@ -159,7 +159,7 @@ public class leaderboards {
             for (int i = target - 5; i < target + 5; i++) {
                 if (i > 0){
                     try{
-                        System.out.println(i + ": " + efficiencyScores.get(i));
+                        System.out.println(i + ": " + efficiencyScores.get(i - 1));
                     } catch (Exception e){
                         System.out.println(i + ": ");
                     }

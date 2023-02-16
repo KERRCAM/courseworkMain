@@ -189,7 +189,7 @@ public class Main {
 
             }
             if (option.equals("4")) {
-
+                leaderboards.leaderboardMenu();
             }
             if (option.equals("5")) {
                 exit = true;
