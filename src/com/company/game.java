@@ -174,7 +174,7 @@ public class game {
             Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + DatabaseLocation, "", "");
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             // also needs to be insert when user is made and then update here
-            stmt.executeUpdate("INSERT INTO gameInfo(ID, time, efficiency, money, food)" + "VALUES ('"+Main.userLoggedIn+","+gameInfo[0]+","+gameInfo[1]+","+gameInfo[2]+","+gameInfo[3]+","+factionInfo[0][0]+","+factionInfo[1][0]+","+factionInfo[2][0]+","+factionInfo[3][0]+"')");
+            stmt.executeUpdate("UPDATE gameInfo set time = '"+gameInfo[0]+"', efficiency = '"+gameInfo[1]+"', money = '"+gameInfo[2]+"', food = '"+gameInfo[3]+"' WHERE ID = '"+userID+"'");
             con.close();
         } catch (Exception e) {
             System.out.println("Error in the SQL class: " + e);
@@ -238,7 +238,7 @@ public class game {
 
 
     public static void specialAttacks(){
-
+        System.out.println(loginFunctions.userIDfinder());
     }
 
 

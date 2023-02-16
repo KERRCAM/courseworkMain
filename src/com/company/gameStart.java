@@ -30,14 +30,8 @@ public class gameStart {
     public static void newGame(){
         Main.fileToMap("gMap1.txt");
         capitolAssignment();
-
         game.initialTime = System.currentTimeMillis();
         game.gameLoop();
-
-
-
-
-
     }
 
 

@@ -39,7 +39,15 @@ public class accountCreationFunctions { //all needs to be converted from text fi
         try {
             Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + DatabaseLocation, "", "");
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            stmt.executeUpdate("INSERT INTO gameInfo(time, efficiency, money, food)" + "VALUES (0, 0, 0, 0)");
+            stmt.executeUpdate("INSERT INTO gameInfo(time, efficiency, money, food)" + "VALUES (0, 0, 0, 0)"); //initialises players game save
+            con.close();
+        } catch (Exception e) {
+            System.out.println("Error in the SQL class: " + e);
+        }
+        try {
+            Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + DatabaseLocation, "", ""); //initialises players scores on leaderboard
+            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            stmt.executeUpdate("INSERT INTO scores(time, efficiency, combined)" + "VALUES (0, 0, 0)");
             con.close();
         } catch (Exception e) {
             System.out.println("Error in the SQL class: " + e);

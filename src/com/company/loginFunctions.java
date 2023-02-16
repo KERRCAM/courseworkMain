@@ -34,13 +34,12 @@ public class loginFunctions {
         fileToList("users.txt");
         int userIndexPos = 0;
         String username = Main.userLoggedIn;
-
         for (int i = 0; i < Main.fileContentsUsers.size(); i++) {
             if (Main.fileContentsUsers.get(i).getUsername().equals(username)) {
                 userIndexPos = i;
             }
         }
-        return(userIndexPos - 3);
+        return(userIndexPos);
     }
 
 
