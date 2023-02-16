@@ -90,14 +90,17 @@ public class accountCreationFunctions { //all needs to be converted from text fi
         boolean valid = false;
         int checks = 0;
         if (username.contains(" ")) {
+            System.out.println("you cant use spaces in your username");
         }else {
             checks++;
         }
         if (username.length() > 3) {
             checks++;
+        }else{
+            System.out.println("username too short");
         }
 
-        //unique name check temp check++ to satisfy if statment
+        //unique name check temp check++ to satisfy if statement
         checks++;
 
 

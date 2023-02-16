@@ -251,9 +251,9 @@ public class Main {
         //fileToMap("gMap1.txt"); // loads map in named text file to active gmap
         //printMap(gMap1, 30, 200); //prints active gmap
 
-        String option = getString("would you like to (enter number of action): \n (1)-log in- \n (2)-sign up- \n (3)-exit-"); //initial menu for login and sign up
         boolean exit = false;
         while(exit == false) { //used to check if the user that logged in is valid and if they are a normal user or an admin account
+            String option = getString("would you like to (enter number of action): \n (1)-log in- \n (2)-sign up- \n (3)-exit-"); //initial menu for login and sign up
             if (option.equals("1")) {
                 int logInStatus = loginFunctions.logIn();
                 if (logInStatus == 0) { //0 = not valid user name or password entered
