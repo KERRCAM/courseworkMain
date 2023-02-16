@@ -1,27 +1,38 @@
 package com.company;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 
 public class gameStart {
 
 
     public static void loadGame() {
+        boolean save = true;
         int userID = loginFunctions.userIDfinder();
         String saveName = "gameSave" + String.valueOf(userID) + ".txt";
         System.out.println(saveName);
-        //Main.fileToMap(saveName); //uncomment when try catch for no existing file is done
-        regionOccCounter(); //counts number of regions controlled by each faction and adjusts game faction information array
-        //need to check for save not existing so no crash - kick to menu if doesnt exist or try catch (probably best)
-        game.initialTime = System.currentTimeMillis();
-        //game.gameLoop //uncomment when game loop is rdy
+        try {
+            Main.fileToMap(saveName);
+        } catch (Exception e) {
+            System.out.println("you have no saved game");
+            save = false;
+            e.printStackTrace();
+        }
+        if (save == true){
+            regionOccCounter(); //counts number of regions controlled by each faction and adjusts game faction information array
+            game.initialTime = System.currentTimeMillis();
+            game.gameLoop(); //uncomment when game loop is rdy
+        }
     }
 
 
     public static void newGame(){
         Main.fileToMap("gMap1.txt");
         capitolAssignment();
+
         game.initialTime = System.currentTimeMillis();
-        game.gameLoop(); //uncomment when game loop is rdy
+        game.gameLoop();
 
 
 

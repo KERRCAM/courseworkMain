@@ -35,6 +35,14 @@ public class accountCreationFunctions { //all needs to be converted from text fi
             con.close();
         } catch (Exception e) {
             System.out.println("Error in the SQL class: " + e);
+        };
+        try {
+            Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + DatabaseLocation, "", "");
+            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            stmt.executeUpdate("INSERT INTO gameInfo(time, efficiency, money, food)" + "VALUES (0, 0, 0, 0)");
+            con.close();
+        } catch (Exception e) {
+            System.out.println("Error in the SQL class: " + e);
         }
     }
 

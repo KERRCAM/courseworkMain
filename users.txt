@@ -1,3 +1,1 @@
 admin,e00cf25ad42683b3df678c61f42c6bda,admin
-abcd,0565a9d4889781545eae12fc99050921,user
-abcdefg,5ff90447ed219f62413acb4a1e217745,user

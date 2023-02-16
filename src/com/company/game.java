@@ -3,10 +3,14 @@ package com.company; //bugs to work out: region 49 invasions for player and enem
 /*
 database
 users table (userid, username)
-game info table (userid, time, efficiency, money, food, cap1, cap2, cap3, cap4)
+game info table (userid, time, efficiency, money, food)
 scores table  (userid, time, efficiency, combined)
 */
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -37,6 +41,7 @@ public class game {
 
 
     public static void playerTurn(){
+        gameInfo[1] = gameInfo[1] + 1;
         passiveGain(); // start off each turn begins with placing the troops passively gained and also adding the money and food gained
         boolean exit = false;
         while (exit == false) {
@@ -164,6 +169,16 @@ public class game {
         int sessionTimeInt = (int)sessionTime;
         gameInfo[0] = sessionTimeInt; //updates time on save with current saved time plus current session time
         gameRunning = false; //stops the game loop
+        String DatabaseLocation = System.getProperty("user.dir") + "\\courseworkDatabase.accdb";
+        try {
+            Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + DatabaseLocation, "", "");
+            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            // also needs to be insert when user is made and then update here
+            stmt.executeUpdate("INSERT INTO gameInfo(ID, time, efficiency, money, food)" + "VALUES ('"+Main.userLoggedIn+","+gameInfo[0]+","+gameInfo[1]+","+gameInfo[2]+","+gameInfo[3]+","+factionInfo[0][0]+","+factionInfo[1][0]+","+factionInfo[2][0]+","+factionInfo[3][0]+"')");
+            con.close();
+        } catch (Exception e) {
+            System.out.println("Error in the SQL class: " + e);
+        }
     }
 
 
