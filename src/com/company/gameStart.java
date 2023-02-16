@@ -9,6 +9,8 @@ public class gameStart {
 
     public static void loadGame() {
         boolean save = true;
+        game.gameDone = false;
+        game.gameRunning = true;
         int userID = loginFunctions.userIDfinder();
         String saveName = "gameSave" + String.valueOf(userID) + ".txt";
         System.out.println(saveName);
@@ -28,6 +30,8 @@ public class gameStart {
 
 
     public static void newGame(){
+        game.gameDone = false;
+        game.gameRunning = true;
         Main.fileToMap("gMap1.txt");
         capitolAssignment();
         game.initialTime = System.currentTimeMillis();

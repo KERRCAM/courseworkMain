@@ -21,6 +21,7 @@ public class game {
     public static int factionInfo[][] = {{0,0},{0,0},{0,0},{0,0}}; //(cap1, regionOccNum1),(cap2, regionOccNum2),(cap3, regionOccNum3),(cap4, regionOccNum4)
     public static long initialTime;
     public static long finalTime;
+    public static boolean gameDone = false;
 
     public static void gameLoop(String startType){
         if (startType == "load") {
@@ -84,6 +85,10 @@ public class game {
             enemyInvasion("P4");
         }
         Main.printMap(game.gMapInPlay, 30, 200);
+        if (factionInfo[0][1] == 49){
+            gameRunning = false;
+            gameDone = true;
+        }
     }
 
 
