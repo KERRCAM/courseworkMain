@@ -10,12 +10,13 @@ public class leaderboards {
     public static ArrayList<Integer> timeScores = new ArrayList<>();
     public static ArrayList<Integer> efficiencyScores = new ArrayList<>();
     public static ArrayList<Integer> combinedScores = new ArrayList<>();
+    public static ArrayList<String> usernames = new ArrayList<>();
 
 
     public static void leaderboardMenu(){
         boolean exit = false;
         while (exit == false) {
-            String action = Main.getString("what would you like to (enter number of action): \n (1)-view combined leaderboard- \n (2)-view timed leaderboard- \n (3)-view efficiency leaderboard- \n (4)-exit- ");
+            String action = Main.getString("what would you like to (enter number of action): \n (1)-view combined leaderboard- \n (2)-view timed leaderboard- \n (3)-view efficiency leaderboard- \n (4)-search username based on combined scores- \n (5)-exit- ");
             if (action.equals("1")) {
                 combined();
             }
@@ -26,6 +27,12 @@ public class leaderboards {
                 efficiency();
             }
             if (action.equals("4")) {
+                usernameSearch();
+            }
+            if (action.equals("5")) {
+                timeScores.clear();
+                efficiencyScores.clear();
+                combinedScores.clear();
                 exit = true;
             }
         }
@@ -88,6 +95,23 @@ public class leaderboards {
             }
 
 
+        }catch(Exception e){
+            System.out.println("Error in the SQL class: " + e);
+        }
+    }
+
+
+    public static void usernameSearch(){
+        String DatabaseLocation = System.getProperty("user.dir") + "\\courseworkDatabase.accdb";
+        int scoreToFind = Main.getInt("enter combined score you wan to find the username(s) for", 0, 1000000000);
+        try{
+            Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + DatabaseLocation, "", "");
+            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String sql = "SELECT username FROM users, scores WHERE scores.ID = users.ID AND scores.combined = '"+scoreToFind+"'";
+            ResultSet rs = stmt.executeQuery(sql); //executes the sql
+            while(rs.next()) {
+                System.out.println(rs.getString("username"));
+            }
         }catch(Exception e){
             System.out.println("Error in the SQL class: " + e);
         }
