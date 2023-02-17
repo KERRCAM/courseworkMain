@@ -139,7 +139,7 @@ public class accountCreationFunctions { //all needs to be converted from text fi
     public static String passwordHash(String inputPassword){ // puts passwords through MD5 hash
         String password = inputPassword;
         String hashedPassword = null;
-        try //code for hash in try from online source not made personally*
+        try //code for hash algorithm in try catch from online source not made personally * https://howtodoinjava.com/java/java-security/how-to-generate-secure-password-hash-md5-sha-pbkdf2-bcrypt-examples/
         {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(password.getBytes());
