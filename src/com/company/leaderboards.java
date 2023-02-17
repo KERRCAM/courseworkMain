@@ -143,11 +143,15 @@ public class leaderboards {
     }
 
 
-    public static void times(){ //same comments for combined
+    public static void times(){ //same comments for combined bar inverter
         int target = targetFinder();
         mergeSort(timeScores);
+        if (timeScores.get(0) > timeScores.get(timeScores.size() - 1)){  //if first index is bigger than last index than its wrong way round so needs to be switched
+            listInverter(timeScores, 0);
+        }
         if (target == 0){
             for (int i = 0; i < 10; i++) {
+
                 try{
                     System.out.println((i + 1) + ": " + timeScores.get(i));
                 } catch (Exception e){
@@ -168,9 +172,12 @@ public class leaderboards {
     }
 
 
-    public static void efficiency(){ //same comments for combined
+    public static void efficiency(){ //same comments for combined bar inverter
         int target = targetFinder();
         mergeSort(efficiencyScores);
+        if (efficiencyScores.get(0) > efficiencyScores.get(efficiencyScores.size() - 1)){
+            listInverter(efficiencyScores, 0);
+        }
         if (target == 0){
             for (int i = 0; i < 10; i++) {
                 try{
@@ -188,6 +195,22 @@ public class leaderboards {
                         System.out.println(i + ": ");
                     }
                 }
+            }
+        }
+    }
+
+
+    public static void listInverter(ArrayList<Integer> array, int type){
+        ArrayList<Integer> correction = new ArrayList<>();
+        for (int i = array.size(); i > 0; i--) {
+            correction.add(array.get(i));
+        }
+        for (int i = 0; i < array.size(); i++) {
+            if (type == 0){
+                timeScores.set(i, correction.get(i));
+            }
+            if (type == 1){
+                efficiencyScores.set(i, correction.get(i));
             }
         }
     }
