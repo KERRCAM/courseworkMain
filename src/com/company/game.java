@@ -217,11 +217,18 @@ public class game {
 
 
     public static void invadeRegion(){ // can only attack once a turn, and you must share a border
-        int exitRegion = Main.getInt("what region would you like to move troops from?", 0, 50);
+        boolean check = false;
+        int exitRegion = 0;
+        while (check == false){ //check for user controlling exit region here to ensure no hard lock loop for troop num
+            exitRegion = Main.getInt("what region would you like to move troops from?", 0, 50);
+            if (gMapInPlay[Main.regionOccPos[exitRegion - 1][0]][Main.regionOccPos[exitRegion - 1][1]].equals("P1")){
+                check = true;
+            }
+        }
         int troopNum = Main.getInt("how many troops would you like to move from the region", 0, Integer.parseInt(gMapInPlay[Main.regionArmPos[exitRegion - 1][0]][Main.regionArmPos[exitRegion - 1][1]])); //limit of current troop count of that region ensures there must be at least 1 troop left in the region
         int targetRegion = Main.getInt("what region would you like to move troops to?", 0, 50);
         boolean valid = checkRegionBorderValid(exitRegion, targetRegion, Main.regionBorderAmounts[exitRegion - 1], "P1");
-        if (valid == true && gMapInPlay[Main.regionOccPos[exitRegion - 1][0]][Main.regionOccPos[exitRegion - 1][1]].equals("P1") && troopNum > Integer.parseInt(gMapInPlay[Main.regionArmPos[targetRegion - 1][0]][Main.regionArmPos[targetRegion - 1][1]])){
+        if (valid == true && troopNum > Integer.parseInt(gMapInPlay[Main.regionArmPos[targetRegion - 1][0]][Main.regionArmPos[targetRegion - 1][1]])){
             String newExit = mapArmyAdj(Integer.parseInt(gMapInPlay[Main.regionArmPos[exitRegion - 1][0]][Main.regionArmPos[exitRegion - 1][1]]) - troopNum);
             gMapInPlay[Main.regionArmPos[exitRegion - 1][0]][Main.regionArmPos[exitRegion - 1][1]] = newExit; // takes troops of region they are being moved from
             String newTarget = mapArmyAdj(troopNum - Integer.parseInt(gMapInPlay[Main.regionArmPos[targetRegion - 1][0]][Main.regionArmPos[targetRegion - 1][1]]));
@@ -242,10 +249,17 @@ public class game {
 
 
     public static void moveTroops(){ // can move troops as much as you want in a turn between any of your controlled regions
-        int exitRegion = Main.getInt("what region would you like to move troops from?", 0, 50);
+        boolean check = false;
+        int exitRegion = 0;
+        while (check == false){ //check for user controlling exit region here to ensure no hard lock loop for troop num
+            exitRegion = Main.getInt("what region would you like to move troops from?", 0, 50);
+            if (gMapInPlay[Main.regionOccPos[exitRegion - 1][0]][Main.regionOccPos[exitRegion - 1][1]].equals("P1")){
+                check = true;
+            }
+        }
         int troopNum = Main.getInt("how many troops would you like to move from the region", 0, Integer.parseInt(gMapInPlay[Main.regionArmPos[exitRegion - 1][0]][Main.regionArmPos[exitRegion - 1][1]])); //limit of current troop count of that region ensures there must be at least 1 troop left in the region
         int targetRegion = Main.getInt("what region would you like to move troops to?", 0, 50);
-        if (gMapInPlay[Main.regionOccPos[exitRegion - 1][0]][Main.regionOccPos[exitRegion - 1][1]].equals("PL") && gMapInPlay[Main.regionOccPos[targetRegion - 1][0]][Main.regionOccPos[targetRegion - 1][1]].equals("PL")){
+        if (gMapInPlay[Main.regionOccPos[targetRegion - 1][0]][Main.regionOccPos[targetRegion - 1][1]].equals("P1")){
             String newExit = mapArmyAdj(Integer.parseInt(gMapInPlay[Main.regionArmPos[exitRegion - 1][0]][Main.regionArmPos[exitRegion - 1][1]]) - troopNum);
             gMapInPlay[Main.regionArmPos[exitRegion - 1][0]][Main.regionArmPos[exitRegion - 1][1]] = newExit; // takes troops of region they are being moved from
             String newTarget = mapArmyAdj(Integer.parseInt(gMapInPlay[Main.regionArmPos[targetRegion - 1][0]][Main.regionArmPos[targetRegion - 1][1]]) + troopNum);
