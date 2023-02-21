@@ -103,7 +103,7 @@ public class leaderboards {
 
     public static void usernameSearch(){
         String DatabaseLocation = System.getProperty("user.dir") + "\\courseworkDatabase.accdb";
-        int scoreToFind = Main.getInt("enter combined score you wanT to find the username(s) for", 0, 1000000000); //gets target score from user
+        int scoreToFind = Main.getInt("enter combined score you want to find the username(s) for", 0, 1000000000); //gets target score from user
         try{
             Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + DatabaseLocation, "", "");
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
