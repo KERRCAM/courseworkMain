@@ -1,4 +1,4 @@
-package com.company; //bugs to work out: region 49 invasions for player and enemy - map army adj for 10 is still adding 0?
+package com.company;
 
 /*
 database
