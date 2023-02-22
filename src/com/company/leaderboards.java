@@ -11,9 +11,10 @@ public class leaderboards {
     public static ArrayList<Integer> efficiencyScores = new ArrayList<>();
     public static ArrayList<Integer> combinedScores = new ArrayList<>();
     public static ArrayList<String> usernames = new ArrayList<>();
-
+//NORMAL TOP 10 SCORES ALL GOOD, SEARCH ON NAME MAYBE STILL DOING TOP 10 (NEED TO CHECK) IF NOT MIGHT JUST BE PRINT THAT NEEDS CHANGE, USERNAME LOOK UP NOT PRINTING ANYTHING AND ENDING PROGRAM
 
     public static void leaderboardMenu(){
+        loadScores();
         boolean exit = false;
         while (exit == false) {
             String action = Main.getString("what would you like to (enter number of action): \n (1)-view combined leaderboard- \n (2)-view timed leaderboard- \n (3)-view efficiency leaderboard- \n (4)-search username based on combined scores- \n (5)-exit- ");
@@ -109,7 +110,7 @@ public class leaderboards {
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             String sql = "SELECT username FROM users, scores WHERE scores.ID = users.ID AND scores.combined = '"+scoreToFind+"'"; //searches for usernames in users that have a score = to the target, linking the tables with the userid primary keys
             ResultSet rs = stmt.executeQuery(sql); //executes the sql
-            while(rs.next()) {
+            while(rs.next()) { //
                 System.out.println(rs.getString("username")); //prints all users found with a matching score
             }
         }catch(Exception e){
@@ -121,7 +122,8 @@ public class leaderboards {
     public static void combined(){
         int target = targetFinder();
         mergeSort(combinedScores);
-        if (target == 0){
+        listInverter(combinedScores, 2);
+        if (target == -1){
             for (int i = 0; i < 10; i++) {
                 try{
                     System.out.println((i + 1) + ": " + combinedScores.get(i)); //prints top 10 scores
@@ -140,18 +142,15 @@ public class leaderboards {
                 }
             }
         }
+        listInverter(combinedScores, 2);
     }
 
 
     public static void times(){ //same comments for combined bar inverter
         int target = targetFinder();
         mergeSort(timeScores);
-        if (timeScores.get(0) > timeScores.get(timeScores.size() - 1)){  //if first index is bigger than last index than its wrong way round so needs to be switched
-            listInverter(timeScores, 0);
-        }
-        if (target == 0){
+        if (target == -1){
             for (int i = 0; i < 10; i++) {
-
                 try{
                     System.out.println((i + 1) + ": " + timeScores.get(i));
                 } catch (Exception e){
@@ -175,10 +174,7 @@ public class leaderboards {
     public static void efficiency(){ //same comments for combined bar inverter
         int target = targetFinder();
         mergeSort(efficiencyScores);
-        if (efficiencyScores.get(0) > efficiencyScores.get(efficiencyScores.size() - 1)){
-            listInverter(efficiencyScores, 0);
-        }
-        if (target == 0){
+        if (target == -1){
             for (int i = 0; i < 10; i++) {
                 try{
                     System.out.println((i + 1) + ": " + efficiencyScores.get(i));
@@ -203,7 +199,7 @@ public class leaderboards {
     public static void listInverter(ArrayList<Integer> array, int type){
         ArrayList<Integer> correction = new ArrayList<>();
         for (int i = array.size(); i > 0; i--) {
-            correction.add(array.get(i));
+            correction.add(array.get(i-1));
         }
         for (int i = 0; i < array.size(); i++) {
             if (type == 0){
@@ -212,12 +208,15 @@ public class leaderboards {
             if (type == 1){
                 efficiencyScores.set(i, correction.get(i));
             }
+            if (type == 2){
+                combinedScores.set(i, correction.get(i));
+            }
         }
     }
 
 
     public static int targetFinder(){ // gets input for if user wants to display the top 10 scores or the surrounding 10 scores of their own score
-        int target = 0;
+        int target = -1;
         String action = Main.getString("How would you like to see the leader board arranged? (enter number of action): \n (1)-top scores- \n (2)-your place on the leaderboard-");
         if (action.equals("2")){
             target = loginFunctions.userIDfinder();
