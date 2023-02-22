@@ -7,14 +7,15 @@ import java.util.Random;
 public class gameStart {
 
 
+    //used to load saved games from text files and the database
     public static void loadGame() {
-        boolean save = true;
-        game.gameDone = false;
-        game.gameRunning = true;
-        int userID = loginFunctions.userIDfinder();
-        Main.fileContentsUsers.clear();
-        String saveName = "gameSave" + String.valueOf(userID) + ".txt";
-        System.out.println(saveName);
+        boolean save = true; // will become false if a save doesnt exist preventing a false game start
+        game.gameDone = false; //will become true when a game is won or lost
+        game.gameRunning = true; //sets the game loop to be active
+        int userID = loginFunctions.userIDfinder(); //gets user ID
+        Main.fileContentsUsers.clear(); //have to clear the array list after to prevent errors
+        String saveName = "gameSave" + String.valueOf(userID) + ".txt"; //game save names decided by ID
+        System.out.println(saveName); //a check
         try {
             Main.fileToMap(saveName);
         } catch (Exception e) {
@@ -22,25 +23,27 @@ public class gameStart {
             save = false;
             e.printStackTrace();
         }
-        if (save == true){
+        if (save == true){ //only runs if a save file was found
             regionOccCounter(); //counts number of regions controlled by each faction and adjusts game faction information array
-            game.initialTime = System.currentTimeMillis();
+            game.initialTime = System.currentTimeMillis(); //gets time of when the game starts
             Main.printMap(game.gMapInPlay, 30, 200);
-            game.gameLoop();
+            game.gameLoop(); //calls main game loop
         }
     }
 
 
+    //used for starting any new games. note a user cant have multiple saves so this will overwrite any save they have
     public static void newGame(){
         game.gameDone = false;
         game.gameRunning = true;
-        Main.fileToMap("gMap1.txt");
-        capitolAssignment();
+        Main.fileToMap("gMap1.txt"); //loads the saved starting state map into the active map
+        capitolAssignment(); //picks capitols
         game.initialTime = System.currentTimeMillis();
         game.gameLoop();
     }
 
 
+    //used to count the number of regions the player and each enemy has in their control and updates faction info with this data
     public static void regionOccCounter(){
         //int count = 0; count and all related in this method is for test run of empty map
         for (int i = 0; i < 49; i++) {
@@ -57,7 +60,7 @@ public class gameStart {
             if (occupation.equals("P4")) {
                 game.factionInfo[3][1] = game.factionInfo[3][1] + 1;
             }
-            /*
+            /* //test print
             if (occupation.equals("NC")) {
                 count++;
                 System.out.println("yes");
@@ -70,6 +73,7 @@ public class gameStart {
     }
 
 
+    //used to pick out the capitols for each player / enemy at the start of a new game. Note capitols only dictate starting position due to changes in game design
     public static void capitolAssignment(){
         int p2Start = 0;
         int p3Start = 0;
@@ -95,6 +99,7 @@ public class gameStart {
     }
 
 
+    //used to ensure all 3 enemy starting locations are unique
     public static int uniqueRandomNum(int p1, int p2, int p3, int p4){
         int region = 0;
         boolean valid = false;
