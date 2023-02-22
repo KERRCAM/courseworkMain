@@ -1,11 +1,12 @@
 package com.company.Objects;
 
-public class User {
+public class User { //makes new user object
 
     private String username;
     private String password;
     private String authority;
 
+    //to string for new user
     @Override
     public String toString() {
         return "User{" +
@@ -15,12 +16,15 @@ public class User {
                 '}';
     }
 
+
     public User(String username, String password, String authority) {
         this.username = username;
         this.password = password;
         this.authority = authority;
     }
 
+
+    //get and sets for all parts of a new user
     public String getUsername() {
         return username;
     }
