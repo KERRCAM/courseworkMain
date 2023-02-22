@@ -21,31 +21,27 @@ import java.util.ArrayList;
 public class Main {
 
 
-    public static String userLoggedIn = "";
+    public static String userLoggedIn = ""; //holds username of the currently logged in user
     public static String usersTable[][] = new String[10][4];
     public static File users = new File("users.txt");
-    public static ArrayList<User> fileContentsUsers = new ArrayList<>();
+    public static String tMapInPlay[][] = new String[13][38]; //the current active tutorial map
+    public static ArrayList<User> fileContentsUsers = new ArrayList<>(); //table where user data is put into when it's taken off the text file
     //new map is filled in with any new map that needs to made into a text file
     public static String newMap[][] = {{}};
-    // navigation arrays of extra data used to get coordinates and data about teh map
-    public static int regionOccPos[][] = {{3,5},{14,4},{24,3},{2,20},{8,15},{2,33},{6,24},{13,17},{19,15},{26,15},{23,22},{26,32},{13,38},{18,41},{8,51},{15,51},{21,53},{7,65},{13,68},{19,68},{9,82},{14,91},{13,108},{15,116} ,{2,92},{3,103},{4,120},{3,132},{2,151},{9,134},{6,149},{12,150},{3,164},{7,165},{15,166},{11,176},{4,182},{2,193},{27,86},{23,104},{27,103},{21,123},{27,122},{25,137},{27,145},{27,160},{26,173},{23,185},{27,191}}; // {2,5} = 3rd row down 6th column across // index pos for region id
-    public static int regionArmPos[][] = {{4,5},{15,4},{25,3},{3,20},{9,15},{3,33},{7,24},{14,17},{20,15},{27,15},{24,22},{27,32},{14,38},{19,41},{9,51},{16,51},{22,53},{8,65},{14,68},{20,68},{10,82},{15,91},{14,108},{16,116},{3,92},{4,103},{5,120},{4,132},{3,151},{10,134},{7,149},{13,150},{4,164},{8,165},{16,166},{12,176},{5,182},{3,193},{28,86},{24,104},{28,103},{22,123},{28,122},{26,137},{28,145},{28,160},{27,173},{24,185},{28,191}}; // index pos for region troop number
-    public static int regionSharedBorders[][] = {{4,5,2,7},{1,5,8,9,3},{2,9,11,10},{1,5,7,6},{1,4,7,2,8},{4,7,13},{6,4,1,5,8},{7,5,2,9,13},{8,2,3,10,11},{3,9,11,12},{9,3,10,12},{10,11,14},{6,8,14,16,15},{13,15,16,17,12},{18,13,14,16},{18,15,13,14,17,20,19},{14,16,20,39},{15,16,19,21},{18,21,22,20,16},{17,16,19,22},{25,18,19,22},{21,19,20,23},{22,26,40,24},{23},{21,26},{25,23,27},{26,28,30},{27,30,29,31},{28,31,33},{27,28,31,32,44},{28,30,32,34,29},{30,31,34,36,35},{29,34,37},{33,31,37,32,36},{32,36,48},{35,32,34,37},{36,34,33,38},{37},{17,40,41},{39,23,42,41,43},{39,40,43},{40,43,44},{41,40,42,44},{30,42,43,45},{44,46},{45,47},{46,48,49},{47,35,49},{47,48}}; // all borders to each region
-    public static int regionBorderAmounts[] = {4,5,4,4,5,3,5,5,5,4,4,3,5,5,4,7,4,4,5,4,4,4,4,1,2,3,3,4,3,5,5,5,3,5,3,4,4,1,3,5,3,3,4,4,2,2,3,3,2}; //number of border for each region
+    //navigation arrays of extra data used to get coordinates and data about the map (each array has 49 pieces or sets of data so the index position represents the region, region 1 is index 0 so there are many corrections for this in the program)
+    //regionOccPos holds all the coordinates of the regions current occupation (NC, P2, P4 etc)
+    //regionArmPos holds the coordinates of each regions current army count (how many troops currently occupy the region)
+    //regionSharedBorders shows all the regions the border a region
+    //region border amounts holds the number of border each region contains
+    public static int regionOccPos[][] = {{3,5},{14,4},{24,3},{2,20},{8,15},{2,33},{6,24},{13,17},{19,15},{26,15},{23,22},{26,32},{13,38},{18,41},{8,51},{15,51},{21,53},{7,65},{13,68},{19,68},{9,82},{14,91},{13,108},{15,116} ,{2,92},{3,103},{4,120},{3,132},{2,151},{9,134},{6,149},{12,150},{3,164},{7,165},{15,166},{11,176},{4,182},{2,193},{27,86},{23,104},{27,103},{21,123},{27,122},{25,137},{27,145},{27,160},{26,173},{23,185},{27,191}};
+    public static int regionArmPos[][] = {{4,5},{15,4},{25,3},{3,20},{9,15},{3,33},{7,24},{14,17},{20,15},{27,15},{24,22},{27,32},{14,38},{19,41},{9,51},{16,51},{22,53},{8,65},{14,68},{20,68},{10,82},{15,91},{14,108},{16,116},{3,92},{4,103},{5,120},{4,132},{3,151},{10,134},{7,149},{13,150},{4,164},{8,165},{16,166},{12,176},{5,182},{3,193},{28,86},{24,104},{28,103},{22,123},{28,122},{26,137},{28,145},{28,160},{27,173},{24,185},{28,191}};
+    public static int regionSharedBorders[][] = {{4,5,2,7},{1,5,8,9,3},{2,9,11,10},{1,5,7,6},{1,4,7,2,8},{4,7,13},{6,4,1,5,8},{7,5,2,9,13},{8,2,3,10,11},{3,9,11,12},{9,3,10,12},{10,11,14},{6,8,14,16,15},{13,15,16,17,12},{18,13,14,16},{18,15,13,14,17,20,19},{14,16,20,39},{15,16,19,21},{18,21,22,20,16},{17,16,19,22},{25,18,19,22},{21,19,20,23},{22,26,40,24},{23},{21,26},{25,23,27},{26,28,30},{27,30,29,31},{28,31,33},{27,28,31,32,44},{28,30,32,34,29},{30,31,34,36,35},{29,34,37},{33,31,37,32,36},{32,36,48},{35,32,34,37},{36,34,33,38},{37},{17,40,41},{39,23,42,41,43},{39,40,43},{40,43,44},{41,40,42,44},{30,42,43,45},{44,46},{45,47},{46,48,49},{47,35,49},{47,48}};
+    public static int regionBorderAmounts[] = {4,5,4,4,5,3,5,5,5,4,4,3,5,5,4,7,4,4,5,4,4,4,4,1,2,3,3,4,3,5,5,5,3,5,3,4,4,1,3,5,3,3,4,4,2,2,3,3,2};
     // {0,0,0,0,0,0} = {airbase,farm,city,port,mine,capitol} 0 = no, 1 = yes
-    public static int regionExtraInfo[][] = {{1,0,0,0,0,0},{0,0,1,0,0,0},{0,0,0,0,1,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,1,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,1,0,0,0,0},{0,0,0,1,0,0},{0,0,0,1,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,1,0,0,0},{0,0,0,0,0,0},{0,1,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,1,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,1,0,0},{0,1,0,0,0,0},{0,0,0,0,0,0},{0,0,1,0,0,0},{0,0,0,0,0,0},{0,0,0,0,1,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,1,0},{1,0,0,0,0,0},{0,0,0,0,0,0},{0,0,1,0,0,0},{0,1,0,0,0,0},{0,0,1,0,0,0},{0,0,0,0,0,0},{0,1,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,1,0},{0,1,0,0,0,0},{0,0,0,0,0,0},{0,0,0,1,0,0},{0,0,0,0,1,0},{0,0,0,0,0,0},{0,1,0,0,0,0},{0,0,1,0,0,0},{0,0,0,0,0,0}}; // all the extra information for each region like if it is a capitol or has farms etc
+    public static int regionExtraInfo[][] = {{1,0,0,0,0,0},{0,0,1,0,0,0},{0,0,0,0,1,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,1,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,1,0,0,0,0},{0,0,0,1,0,0},{0,0,0,1,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,1,0,0,0},{0,0,0,0,0,0},{0,1,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,1,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,1,0,0},{0,1,0,0,0,0},{0,0,0,0,0,0},{0,0,1,0,0,0},{0,0,0,0,0,0},{0,0,0,0,1,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,1,0},{1,0,0,0,0,0},{0,0,0,0,0,0},{0,0,1,0,0,0},{0,1,0,0,0,0},{0,0,1,0,0,0},{0,0,0,0,0,0},{0,1,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,1,0},{0,1,0,0,0,0},{0,0,0,0,0,0},{0,0,0,1,0,0},{0,0,0,0,1,0},{0,0,0,0,0,0},{0,1,0,0,0,0},{0,0,1,0,0,0},{0,0,0,0,0,0}};
 
 
-    //public static File gMap1File = new File("gMap1.txt");
-    //public static File tMap1File= new File("tMap1.txt");
-
-
-    public static String tMapInPlay[][] = new String[13][38];
-
-
-
-
-
+    //used to print any given map in the right colours and in the right format so it can be easily read by the user
     public static void printMap(String mapName[][], int row, int column) {
         //colour values for printed text
         String ANSI_RESET = "\u001B[0m";
@@ -87,10 +83,10 @@ public class Main {
     }
 
 
-    public static void mapToFile(String fileName, String mapName[][], int row, int column) { //coverts given map into file with given name
+    //coverts any given map into a text file with the given name. able to handle maps of any size
+    public static void mapToFile(String fileName, String mapName[][], int row, int column) {
         try {
             FileWriter myWriter = new FileWriter(fileName, false);
-            //myWriter.write( + "\n"); // writes to file
             for (int i = 0; i < row; i++){
                 for (int j = 0; j < column; j++) {
                     myWriter.write( mapName[i][j] + ",");
@@ -106,7 +102,8 @@ public class Main {
     }
 
 
-    public static void fileToMap(String fileName) { //gets file of given name and splits it so it can be put into the gMapInPlay
+    //gets any game map file of given name and splits it so it can be put into the gMapInPlay. used to load maps from saves.
+    public static void fileToMap(String fileName) {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             int i = 0;
@@ -126,6 +123,7 @@ public class Main {
     }
 
 
+    //same as above but for totorial maps instead of game maps
     public static void fileToMapt(String fileName) { //gets file of given name and splits it so it can be put into the tMapinPlay
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
@@ -146,7 +144,8 @@ public class Main {
     }
 
 
-    public static void newMap(){ //infrastructure for if you wanted to add a new main map
+    //used by the admin to save a new map of any size (up to 1000 by 1000) into the system. Infrastructure for if you wanted to add a new main map
+    public static void newMap(){
         String newMapName = getString("what is the name of the new map");
         int rows = getInt("enter number of rows for new map (vertical height)", 0, 1000);
         int columns = getInt("enter number of rows for new map (horizontal width)", 0, 1000);
@@ -154,7 +153,8 @@ public class Main {
     }
 
 
-    public static String getString(String prompt) { //general method for getting a string anywhere in the program
+    //general method for getting a string anywhere in the program
+    public static String getString(String prompt) {
         Scanner input = new Scanner(System.in);
         String strInput = "";
         try {
@@ -168,7 +168,8 @@ public class Main {
     }
 
 
-    public static int getInt(String prompt, int lower, int upper) { //general method for getting an integer anywhere in the program
+    //general method for getting an integer anywhere in the program. uses an upper and lower bound to dictate a valid input
+    public static int getInt(String prompt, int lower, int upper) {
         Scanner input = new Scanner(System.in);
         int intInput = -1;
         while (intInput > upper || intInput < lower) {
@@ -179,7 +180,8 @@ public class Main {
     }
 
 
-    public static void adminMenu() { //menu with all admin options
+    //menu with all admin options. Used so an admin could add new maps
+    public static void adminMenu() {
         boolean exit = false;
         while (exit == false) {
             String action = getString("what would you like to (enter number of action): \n (1)-add map- \n (2)-exit- ");
@@ -193,15 +195,16 @@ public class Main {
     }
 
 
-    public static void userMenu() { //menu with limited user options
-        boolean exit = false;
+    //menu with all the user options. doesnt let the user add new maps, but lets them have all game functions
+    public static void userMenu() {
+        boolean exit = false; //will keep running the menu until the user exits
         while (exit == false) {
             String option = getString("what would you like to (enter number of action): \n (1)-load game save-  \n (2)-start new game (warning new game will overwrite any saved game)- \n (3)-view tutorial- \n (4)-view leaderboards- \n (5)-exit-");
             if (option.equals("1")) {
-                game.gameLoop("load");
+                game.gameLoopStart("load");
             }
             if (option.equals("2")) {
-                game.gameLoop("new");
+                game.gameLoopStart("new");
             }
             if (option.equals("3")) {
                 tutorial();
@@ -216,34 +219,36 @@ public class Main {
     }
 
 
+    //tutorial print. not a fully complete tutorial but gives the main idea of how it functions
+    //not done purley because it requires making many maps which takes an overly long amount of time to do
     public static void tutorial(){
         fileToMapt("tMap1.txt");
         printMap(tMapInPlay, 13, 38);
-        getString("this is a starting map (enter to continue)");
+        getString("this is a starting map (enter anything to continue)");
         fileToMapt("tMap2.txt");
         printMap(tMapInPlay, 13, 38);
-        getString("PL starts by picking their capitol and FA is given capitol as well (enter to continue)");
+        getString("PL starts by picking their capitol and FA is given capitol as well (enter anything to continue)");
         fileToMapt("tMap3.txt");
         printMap(tMapInPlay, 13, 38);
-        getString("PL troop gain (enter to continue)");
+        getString("PL troop gain (enter anything to continue)");
         fileToMapt("tMap4.txt");
         printMap(tMapInPlay, 13, 38);
-        getString("PL invades 02 from 01 (enter to continue)");
+        getString("PL invades 02 from 01 (enter anything to continue)");
         fileToMapt("tMap5.txt");
         printMap(tMapInPlay, 13, 38);
-        getString("FA turn (enter to continue)");
+        getString("FA turn (enter anything to continue)");
         fileToMapt("tMap6.txt");
         printMap(tMapInPlay, 13, 38);
-        getString("PL troop gain (enter to continue)");
+        getString("PL troop gain (enter anything to continue)");
         fileToMapt("tMap7.txt");
         printMap(tMapInPlay, 13, 38);
-        getString("moved troops from 01 to 02 (enter to continue)");
+        getString("moved troops from 01 to 02 (enter anything to continue)");
         fileToMapt("tMap8.txt");
         printMap(tMapInPlay, 13, 38);
-        getString("PL bombs 06 with 01 cutting troops in half (enter to continue)");
+        getString("PL bombs 06 with 01 cutting troops in half (enter anything to continue)");
         fileToMapt("tMap9.txt");
         printMap(tMapInPlay, 13, 38);
-        getString("PL invades 04 from 02 (enter to continue)");
+        getString("PL invades 04 from 02 (enter anything to continue)");
     }
 
 
@@ -261,7 +266,7 @@ public class Main {
         // ^^^ = mines
 
 
-        // gmap1 only here for convenience - it's not needed to be in the program to function
+        // gmap1 only here for convenience - it's not needed to be in the program to function (lets me make any manual edits needed)
         String gMap1[][] = {{"#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"},
                             {"#", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "/", ".", ".", ".", ".", "04", "", ".", ".", ".", ".", ".", ".", ".", "/", ".", ".", ".", "06", "", ".", ".", ".", ".", ".", ".", ".", "#", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "#", "#", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "25", "", ".", ".", ".", ".", "/", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "/", ".", ".", ".", ".", ".", "/", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "/", ".", ".", ".", ".", ".", ".", "29", "", ".", ".", ".", ".", ".", ".", "/", ".", ".", ".", ".", ".", ".", "I", ".", ".", ".", ".", "I", ".", ".", ".", ".", "/", ".", "|", ".", ".", ".", ".", ".", ".", ".", ".", "/", ".", ".", ".", ".", ".", "38", "", ".", ".", ".", ".", "#"},
                             {"#", ".", ".", ".", ".", "01", "", ".", "I", ".", ".", ".", ".", ".", ".", ".", "/", ".", ".", ".", "NC", "", ".", ".", ".", ".", ".", ".", ".", "/", ".", ".", ".", "NC", "", ".", ".", ".", ".", ".", "#", "#", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "#", "#", "#", "#", "#", "#", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "NC", "", ".", ".", ".", ".", "/", ".", ".", "|", ".", "26", "", ".", ".", ".", ".", ".", ".", ".", ".", "|", ".", ".", ".", "/", ".", ".", ".", ".", ".", ".", "/", ".", ".", ".", "^", ".", ".", ".", "28", "", ".", ".", "^", ".", ".", ".", ".", ".", "^", ".", "/", ".", ".", ".", ".", ".", ".", "NC", "", ".", ".", ".", ".", ".", ".", "/", ".", ".", ".", ".", "33", "", "=", "=", "=", "=", ".", "=", "=", "=", "=", ".", "/", "|", "|", ".", ".", ".", ".", ".", ".", ".", ".", ".", "/", ".", ".", ".", ".", "NC", "", ".", ".", ".", ".", "#"},
@@ -298,6 +303,7 @@ public class Main {
 
 
 
+        //this is the main menu that appears when the program starts, having just login, sign up and exit
         boolean exit = false;
         while(exit == false) { //used to check if the user that logged in is valid and if they are a normal user or an admin account
             String option = getString("would you like to (enter number of action): \n (1)-log in- \n (2)-sign up- \n (3)-exit-"); //initial menu for login and sign up
@@ -315,10 +321,10 @@ public class Main {
                     adminMenu();
                 }
             }
-            if (option.equals("2")) {
+            if (option.equals("2")) { //makes user
                 accountCreationFunctions.makeUser();
             }
-            if (option.equals("3")) {
+            if (option.equals("3")) { //will end program
                 exit = true;
             }
         }

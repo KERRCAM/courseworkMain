@@ -24,7 +24,7 @@ public class game {
     public static boolean gameDone = false;
 
 
-    public static void gameLoop(String startType){
+    public static void gameLoopStart(String startType){
         if (startType == "load") {
             gameStart.loadGame();
         }
@@ -126,7 +126,6 @@ public class game {
             enemyInvasion("P4");
         }
         Main.printMap(game.gMapInPlay, 30, 200);
-
     }
 
 
@@ -295,7 +294,7 @@ public class game {
     }
 
 
-    public static void specialAttacks(){
+    public static void specialAttacks(){ //didnt go ahead making specials attacks but used method for real time testing purposes
         System.out.println(loginFunctions.userIDfinder());
         Main.fileContentsUsers.clear();
     }
