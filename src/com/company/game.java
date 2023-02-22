@@ -46,6 +46,9 @@ public class game {
 
 
     public static void endGame(){
+        finalTime = System.currentTimeMillis();
+        float sessionTime = (((finalTime - initialTime) / 1000) + gameInfo[0]);
+        gameInfo[0] = gameInfo[0] + (int)sessionTime;
         if (factionInfo[0][1] == 0){
             System.out.println("ALL FRIENDLY REGIONS HAVE BEEN INVADED, YOU LOSE"); // if game was lost
         }
@@ -100,6 +103,10 @@ public class game {
 
     public static void enemyTurns(){
         gameStart.regionOccCounter();
+        if (factionInfo[0][1] == 49 || factionInfo[0][1] == 0){
+            gameRunning = false;
+            gameDone = true;
+        }
         if (factionInfo[1][1] > 0){
             enemyPassiveGain("P2");
             enemyInvasion("P2");
@@ -113,10 +120,7 @@ public class game {
             enemyInvasion("P4");
         }
         Main.printMap(game.gMapInPlay, 30, 200);
-        if (factionInfo[0][1] == 49 || factionInfo[0][1] == 0){
-            gameRunning = false;
-            gameDone = true;
-        }
+
     }
 
 
