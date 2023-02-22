@@ -17,8 +17,6 @@ public class loginFunctions {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
-
-
                 if(file.equals("users.txt")) {
                     Main.fileContentsUsers.add(commaSeperatedStringsSplitterUser(line));//Creates user objects and adds to Arraylist
                 }

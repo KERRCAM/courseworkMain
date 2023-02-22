@@ -99,11 +99,22 @@ public class accountCreationFunctions { //all needs to be converted from text fi
         }else{
             System.out.println("username too short");
         }
-
-        //unique name check temp check++ to satisfy if statement
+        String DatabaseLocation = System.getProperty("user.dir") + "\\courseworkDatabase.accdb";
+        try{
+            Connection con = DriverManager.getConnection("jdbc:ucanaccess://" + DatabaseLocation, "", "");
+            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String sql = "SELECT username FROM users"; //gets all usernames
+            ResultSet rs = stmt.executeQuery(sql); //executes the sql
+            while(rs.next()) {
+                if (username.equals(rs.getString("username"))){
+                    System.out.println("this username is taken");
+                    checks--;
+                }
+            }
+        }catch(Exception e){
+            System.out.println("Error in the SQL class: " + e);
+        }
         checks++;
-
-
         if (checks == 3) {
             valid = true;
         }

@@ -126,6 +126,26 @@ public class Main {
     }
 
 
+    public static void fileToMapt(String fileName) { //gets file of given name and splits it so it can be put into the tMapinPlay
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            int i = 0;
+            while ((line = br.readLine()) != null) {
+                List<String> splitLine = Arrays.asList(line.split(","));
+                for (int j = 0; j < 38; j++) {
+                    tMapInPlay[i][j] = splitLine.get(j);
+                    //System.out.print(splitLine.get(i)); //test print
+                }
+                //System.out.println(); //test print
+                i++;
+            }
+        } catch (Exception e) {
+            System.out.println("error");
+            System.out.println(e);
+        }
+    }
+
+
     public static void newMap(){ //infrastructure for if you wanted to add a new main map
         String newMapName = getString("what is the name of the new map");
         int rows = getInt("enter number of rows for new map (vertical height)", 0, 1000);
@@ -164,7 +184,7 @@ public class Main {
         while (exit == false) {
             String action = getString("what would you like to (enter number of action): \n (1)-add map- \n (2)-exit- ");
             if (action.equals("1")) {
-
+                newMap();
             }
             if (action.equals("2")) {
                 exit = true;
@@ -184,7 +204,7 @@ public class Main {
                 game.gameLoop("new");
             }
             if (option.equals("3")) {
-
+                tutorial();
             }
             if (option.equals("4")) {
                 leaderboards.leaderboardMenu();
@@ -193,6 +213,37 @@ public class Main {
                 exit = true;
             }
         }
+    }
+
+
+    public static void tutorial(){
+        fileToMapt("tMap1.txt");
+        printMap(tMapInPlay, 13, 38);
+        getString("this is a starting map (enter to continue)");
+        fileToMapt("tMap2.txt");
+        printMap(tMapInPlay, 13, 38);
+        getString("PL starts by picking their capitol and FA is given capitol as well (enter to continue)");
+        fileToMapt("tMap3.txt");
+        printMap(tMapInPlay, 13, 38);
+        getString("PL troop gain (enter to continue)");
+        fileToMapt("tMap4.txt");
+        printMap(tMapInPlay, 13, 38);
+        getString("PL invades 02 from 01 (enter to continue)");
+        fileToMapt("tMap5.txt");
+        printMap(tMapInPlay, 13, 38);
+        getString("FA turn (enter to continue)");
+        fileToMapt("tMap6.txt");
+        printMap(tMapInPlay, 13, 38);
+        getString("PL troop gain (enter to continue)");
+        fileToMapt("tMap7.txt");
+        printMap(tMapInPlay, 13, 38);
+        getString("moved troops from 01 to 02 (enter to continue)");
+        fileToMapt("tMap8.txt");
+        printMap(tMapInPlay, 13, 38);
+        getString("PL bombs 06 with 01 cutting troops in half (enter to continue)");
+        fileToMapt("tMap9.txt");
+        printMap(tMapInPlay, 13, 38);
+        getString("PL invades 04 from 02 (enter to continue)");
     }
 
 
@@ -245,9 +296,7 @@ public class Main {
 
 
 
-        mapToFile("gMap1.txt",gMap1, 30, 200);
-        //fileToMap("gMap1.txt"); // loads map in named text file to active gmap
-        //printMap(gMap1, 30, 200); //prints active gmap
+
 
         boolean exit = false;
         while(exit == false) { //used to check if the user that logged in is valid and if they are a normal user or an admin account
