@@ -76,10 +76,16 @@ public class game {
         gameInfo[1] = gameInfo[1] + 1;
         passiveGain(); // start off each turn begins with placing the troops passively gained and also adding the money and food gained
         boolean exit = false;
+        boolean invasion = false;
         while (exit == false) {
             String option = Main.getString("what would you like to (enter number of action): \n (1)-invade region-  \n (2)-move troops- \n (3)-make troops- \n (4)-special attacks- \n (5)-end turn- \n (6)-save and exit-");
             if (option.equals("1")) {
-                invadeRegion();
+                if (invasion == true){
+                    System.out.println("you can only invade once per turn");
+                }else{
+                    invadeRegion();
+                    invasion = true;
+                }
             }
             if (option.equals("2")) {
                 moveTroops();
