@@ -107,7 +107,7 @@ public class leaderboards {
 
 
     //used to find the usernames that hold scores that the user enters
-    //has very odd situation with this (mentioned in testing) where it works with a new database but not the original one i was suing in development even though everything was identical
+    //has very odd situation with this (mentioned in testing) where it works with a new database but not the original one i was using in development even though everything was identical
     public static void usernameSearch(){
         String DatabaseLocation = System.getProperty("user.dir") + "\\courseworkDatabase.accdb";
         int scoreToFind = Main.getInt("enter combined score you want to find the username(s) for", 0, 1000000000); //gets target score from user
