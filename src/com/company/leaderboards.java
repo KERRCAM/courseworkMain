@@ -149,7 +149,7 @@ public class leaderboards {
                 }
             }
         }
-        listInverter(combinedScores, 2); //re inverts list so re-callls of method work in one program running
+        listInverter(combinedScores, 2); //re inverts list so re-calls of method work in one program running
     }
 
 
