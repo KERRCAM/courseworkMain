@@ -123,7 +123,7 @@ public class Main {
     }
 
 
-    //same as above but for totorial maps instead of game maps
+    //same as above but for tutorial maps instead of game maps
     public static void fileToMapt(String fileName) { //gets file of given name and splits it so it can be put into the tMapinPlay
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
